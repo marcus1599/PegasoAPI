@@ -7,17 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @AllArgsConstructor
+@ToString
 @Entity
 public class Postagem {
     
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long idPostagem;
@@ -39,6 +42,7 @@ public class Postagem {
 
     @Column(nullable = true)
     ArrayList<Comentario> comentarios;
+
     @Column
     int curtidas;
 
