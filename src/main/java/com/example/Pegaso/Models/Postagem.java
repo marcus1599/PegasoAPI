@@ -25,26 +25,27 @@ public class Postagem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long idPostagem;
 
-    @Column(nullable = false)
-    String nome;
+    @Column (nullable = false)
+    String   nome;
 
-    @Column(nullable = false)
-    String descricao;
-
-    @Column(nullable = true)
+    @Column (nullable = false)
+    String   descricao;
+    
+    @Column (nullable = true)
     ArrayList<Dica> dicas;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     ArrayList<Imagem> imagems;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     ArrayList<Video>videos;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     ArrayList<Comentario> comentarios;
 
-    @Column
-    int curtidas;
+    @Column(nullable = true)
+    int curtidas =0;
 
     
 }
+

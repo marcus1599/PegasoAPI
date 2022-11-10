@@ -21,7 +21,7 @@ public class GestaoPostagem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id_gestao;
 
-    @Column
+    @Column(nullable = true)
     ArrayList<Postagem> postagems;
     
 }
