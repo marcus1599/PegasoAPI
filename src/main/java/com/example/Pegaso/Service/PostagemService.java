@@ -7,6 +7,7 @@ import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.PostagemRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostagemService {
@@ -20,7 +21,7 @@ public class PostagemService {
     public List<Postagem> findAllPost(){
         return repository.findAll();
     }
-    public Object findPostById(Long id){
+    public Optional<Postagem> findPostById(Long id){
         return repository.findById(id);
     }
     
