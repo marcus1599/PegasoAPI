@@ -8,6 +8,7 @@ import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.VO.V1.PostagemVO;
 import com.example.Pegaso.VO.V1.PostagemVO_OutPut;
+import com.example.Pegaso.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -42,20 +43,25 @@ public class PostagemService {
     public PostagemVO findPostById(Long id)
         {
 
-            var entity =  repository.findById(id).orElseThrow();
+            var entity =  repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Searched post with specified id not found")
+            );
             return DozerMapper.parseObject(entity, PostagemVO.class);
         }
 
     public PostagemVO_OutPut findByIdPostagemCostomized(Long id)
         {
-            var entity =  repository.findById(id).orElseThrow();
+            var entity =  repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Searched post with specified id not found"));
 
             return DozerMapper.convertPostEntitityOutPut(entity);
         }
 
     public PostagemVO update(PostagemVO postagemVO, Long id)
         {
-            var entity = repository.findById(id).orElseThrow();
+            var entity = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Searched post with specified id not found")
+            );
 
             entity.setNome(postagemVO.getNome());
             entity.setDescricao(postagemVO.getDescricao());
