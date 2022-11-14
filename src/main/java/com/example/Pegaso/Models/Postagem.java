@@ -1,5 +1,6 @@
 package com.example.Pegaso.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
@@ -20,8 +21,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-public class Postagem {
-    
+public class Postagem  implements Serializable{
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long idPostagem;
