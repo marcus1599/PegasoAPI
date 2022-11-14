@@ -25,28 +25,28 @@ public class Postagem  implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long idPostagem;
+    private Long idPostagem;
 
     @Column (nullable = false)
-    String   nome;
+    private String   nome;
 
     @Column (nullable = false)
-    String   descricao;
+    private String   descricao;
     
     @Column (nullable = true)
-    ArrayList<Dica> dicas;
+    private ArrayList<Dica> dicas;
 
     @Column (nullable = true)
-    ArrayList<Imagem> imagems;
+    private ArrayList<Imagem> imagems;
 
     @Column (nullable = true)
-    ArrayList<Video>videos;
+    private ArrayList<Video>videos;
 
     @Column (nullable = true)
-    ArrayList<Comentario> comentarios;
+    private ArrayList<Comentario> comentarios;
 
     @Column(nullable = true)
-    int curtidas =0;
+    private int curtidas =0;
 
     
 }

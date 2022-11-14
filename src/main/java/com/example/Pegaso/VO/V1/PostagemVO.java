@@ -4,34 +4,40 @@ package com.example.Pegaso.VO.V1;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Imagem;
 import com.example.Pegaso.Models.Video;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
 
 
-
-public class PostagemVO  implements Serializable{
+@JsonPropertyOrder({"idPostagem", "nome", "descricao", "dicas", "imagems","videos","comentarios","curtidas"})
+public class PostagemVO extends RepresentationModel<PostagemVO>  implements Serializable{
     private static final long serialVersionUID = 1L;
   
-   
-    Long idPostagem;
-    String   nome;
-    String   descricao;
-    ArrayList<Dica> dicas;
-    ArrayList<Imagem> imagems;
-    ArrayList<Video>videos;
-    ArrayList<Comentario> comentarios;
-    int curtidas =0;
+    @JsonProperty("idPostagem")
+    @Mapping("idPostagem")
+    private Long key;
+    private String   nome;
+    private String   descricao;
+    private ArrayList<Dica> dicas;
+    private ArrayList<Imagem> imagems;
+    private ArrayList<Video>videos;
+    private ArrayList<Comentario> comentarios;
+    private int curtidas =0;
     public PostagemVO(){
         
     }
 
-    public Long getIdPostagem() {
-        return idPostagem;
+    public Long getKey() {
+        return key;
     }
-    public void setIdPostagem(Long idPostagem) {
-        this.idPostagem = idPostagem;
+    public void setKey(Long key) {
+        this.key = key;
     }
     public String getNome() {
         return nome;
@@ -80,7 +86,7 @@ public class PostagemVO  implements Serializable{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((idPostagem == null) ? 0 : idPostagem.hashCode());
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
         result = prime * result + ((dicas == null) ? 0 : dicas.hashCode());
@@ -100,10 +106,10 @@ public class PostagemVO  implements Serializable{
         if (getClass() != obj.getClass())
             return false;
         PostagemVO other = (PostagemVO) obj;
-        if (idPostagem == null) {
-            if (other.idPostagem != null)
+        if (key == null) {
+            if (other.key != null)
                 return false;
-        } else if (!idPostagem.equals(other.idPostagem))
+        } else if (!key.equals(other.key))
             return false;
         if (nome == null) {
             if (other.nome != null)

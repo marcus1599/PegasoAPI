@@ -2,7 +2,10 @@ package com.example.Pegaso.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.example.Pegaso.Controller.PostagemController;
 import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.PostagemRepository;
@@ -30,6 +33,7 @@ public class PostagemService {
 
                 //Convertendo para Vo para exibir para usuário
                 var vo = DozerMapper.parseObject(postagem, PostagemVO.class);
+                vo.add(linkTo(methodOn(PostagemController.class).getOnePost(vo.getKey())).withSelfRel());
                 return vo;
         }
 
@@ -37,6 +41,11 @@ public class PostagemService {
         {
             var post = repository.findAll();
             var postagemVO = DozerMapper.parseListObjects(post, PostagemVO.class);
+
+            postagemVO.stream()
+            .forEach(p-> p.add(linkTo(methodOn(PostagemController.class)
+            .getOnePost(p.getKey())).withSelfRel()));
+
             return postagemVO;
         }
 
@@ -46,7 +55,9 @@ public class PostagemService {
             var entity =  repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Searched post with specified id not found")
             );
-            return DozerMapper.parseObject(entity, PostagemVO.class);
+            PostagemVO vo = DozerMapper.parseObject(entity, PostagemVO.class);
+            vo.add(linkTo(methodOn(PostagemController.class).getOnePost(id)).withSelfRel());
+            return vo;
         }
 
     public PostagemVO_OutPut findByIdPostagemCostomized(Long id)
@@ -69,6 +80,7 @@ public class PostagemService {
             var postagem = repository.save(entity);
 
             var vo = DozerMapper.parseObject(postagem, PostagemVO.class);
+            vo.add(linkTo(methodOn(PostagemController.class).getOnePost(vo.getKey())).withSelfRel());
             return vo;
             
         }
