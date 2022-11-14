@@ -2,6 +2,8 @@ package com.example.Pegaso.Mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.Pegaso.Models.Postagem;
+import com.example.Pegaso.VO.V1.PostagemVO_OutPut;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
@@ -24,5 +26,14 @@ public class DozerMapper {
 
         return destinationObjects;
 
+    }
+    public static PostagemVO_OutPut convertPostEntitityOutPut(Postagem postagem){
+        PostagemVO_OutPut vo = new PostagemVO_OutPut();
+        
+        vo.setIdPostagem(postagem.getIdPostagem());
+        vo.setNome(postagem.getNome());
+        vo.setDescricao(postagem.getDescricao());
+        vo.setCurtidas(postagem.getCurtidas());
+        return vo;
     }
 }

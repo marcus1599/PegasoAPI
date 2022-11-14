@@ -2,7 +2,7 @@ package com.example.Pegaso.Controller;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.PostagemVO;
 
-import java.security.Provider.Service;
+
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController()
 @RequestMapping("Postagem")
@@ -48,6 +47,12 @@ public class PostagemController {
        
 
         return ResponseEntity.status(HttpStatus.OK).body(service.findPostById(id));
+    }
+    @GetMapping(value = "/vo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getOnePostCostom(@PathVariable(value = "id") Long id){
+       
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.findByIdPostagemCostomized(id));
     }
 
     @DeleteMapping("/{id}")
