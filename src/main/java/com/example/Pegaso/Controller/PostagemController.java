@@ -23,32 +23,32 @@ import com.example.Pegaso.VO.V1.PostagemVO;
 import java.util.List;
 
 
-@RestController()
-@RequestMapping("Postagem")
+@RestController
+@RequestMapping("Postagem/v1")
 public class PostagemController {
     
     @Autowired
     private PostagemService service;
 
-    @PostMapping(value = "/Adicionar",produces = MediaType.APPLICATION_JSON_VALUE,
-                consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/Adicionar",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+                consumes ={ MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_XML_VALUE})
    public  ResponseEntity<Object>savePostagem(@RequestBody @Valid PostagemVO postagem)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.savePostagem(postagem));
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<PostagemVO>>getPosts(){
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllPost());
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getOnePost(@PathVariable(value = "id") Long id){
        
 
         return ResponseEntity.status(HttpStatus.OK).body(service.findPostById(id));
     }
-    @GetMapping(value = "/vo/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/vo/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getOnePostCostom(@PathVariable(value = "id") Long id){
        
 
@@ -62,8 +62,8 @@ public class PostagemController {
         return ResponseEntity.status(HttpStatus.OK).body("Post deleted Sucefully");
     }
 
-    @PutMapping(value = "/Update/{id}",produces = MediaType.APPLICATION_JSON_VALUE,
-                consumes= MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/Update/{id}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
+                consumes ={ MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> updatePost(@PathVariable(value = "id") Long id,
      @RequestBody @Valid PostagemVO post)
      {
