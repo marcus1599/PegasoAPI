@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@EnableWebMvc
 @Configuration
 public class WebConfig  implements WebMvcConfigurer{
 
@@ -21,7 +23,9 @@ public class WebConfig  implements WebMvcConfigurer{
         registry.addMapping("/**")
         // define quais verbos ou todos *//
         .allowedMethods("GET", "POST", "PUT")
-        .allowedMethods("*").allowedOrigins(allowedOrigins).allowCredentials(true);}
+        .allowedMethods("*")
+        .allowedOrigins(allowedOrigins)
+        .allowCredentials(true);}
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer){
