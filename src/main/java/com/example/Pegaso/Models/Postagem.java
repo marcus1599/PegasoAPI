@@ -42,9 +42,6 @@ public class Postagem  implements Serializable{
     @Column (nullable = true)
     private ArrayList<Video>videos;
 
-    @Column (nullable = true)
-    private ArrayList<Comentario> comentarios;
-
     @Column(nullable = true)
     private int curtidas =0;
 

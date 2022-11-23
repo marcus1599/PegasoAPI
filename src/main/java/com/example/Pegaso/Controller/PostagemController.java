@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
-//@CrossOrigin(origins = {"http://localhost:8080","https://ifgoiano.edu.br"})
+
 @RestController
 @RequestMapping("Postagem/v1")
 @Tag(name = "Posts", description = "Endpoints for Managing Posts")
