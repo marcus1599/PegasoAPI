@@ -2,8 +2,12 @@ package com.example.Pegaso.Mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Postagem;
+import com.example.Pegaso.Models.Usuário;
+import com.example.Pegaso.VO.V1.ComentarioVO_OutPut;
 import com.example.Pegaso.VO.V1.PostagemVO_OutPut;
+import com.example.Pegaso.VO.V1.UsuarioVO_OutPut;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
@@ -27,6 +31,16 @@ public class DozerMapper {
         return destinationObjects;
 
     }
+
+    public static ComentarioVO_OutPut convertCommentEntitityOutPut(Comentario comentario) {
+    	
+    	ComentarioVO_OutPut vo = new ComentarioVO_OutPut();
+    	vo.setIdComentario(comentario.getIdComentario());
+    	vo.setCorpo(comentario.getCorpo());
+    	vo.setCurtidas(comentario.getCurtidas());
+    	return vo;
+    }
+    
     public static PostagemVO_OutPut convertPostEntitityOutPut(Postagem postagem){
         PostagemVO_OutPut vo = new PostagemVO_OutPut();
         
@@ -35,5 +49,15 @@ public class DozerMapper {
         vo.setDescricao(postagem.getDescricao());
         vo.setCurtidas(postagem.getCurtidas());
         return vo;
+    }
+
+    public static UsuarioVO_OutPut convertUserEntitityOutPut(Usuário usuário) {
+    	
+    	UsuarioVO_OutPut vo = new UsuarioVO_OutPut();
+    	vo.setIdUsuario(usuário.getIdUsuario());
+    	vo.setNome(usuário.getNome());
+    	vo.setBiografia(usuário.getBiografia());
+    	vo.setEmail(usuário.getEmail());
+    	return vo;
     }
 }
