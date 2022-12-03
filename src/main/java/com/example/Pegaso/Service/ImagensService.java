@@ -1,5 +1,6 @@
 package com.example.Pegaso.Service;
 
+import com.example.Pegaso.Models.Imagem;
 import com.example.Pegaso.Repository.ImagensRepositiry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,11 @@ public class ImagensService {
 
     @Autowired
     private ImagensRepositiry repositiry;
+
+
+    public Imagem salvar( Imagem imagem){
+        return repositiry.save(imagem);
+    }
 
 
 
