@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Service.DicaService;
 import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.DicaVO;
-import com.example.Pegaso.VO.V1.PostagemVO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

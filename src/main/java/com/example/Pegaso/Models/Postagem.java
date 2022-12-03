@@ -16,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
+import com.example.Pegaso.VO.V1.DicaVO_OutPut;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +26,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
-@Setter
-@Getter
+
 @AllArgsConstructor
 @ToString
 @Entity
@@ -41,10 +43,8 @@ public class Postagem  implements Serializable{
     @Column (nullable = false)
     private String   descricao;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "post")
- 
-
-    private List<Dica> dicas;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "postagem")
+    private List<Dica> dicas = new ArrayList<>();
 
     @Column (nullable = true)
     private ArrayList<Imagem> imagems;
@@ -52,13 +52,60 @@ public class Postagem  implements Serializable{
     @Column (nullable = true)
     private ArrayList<Video>videos;
 
-    @Column(nullable = true)
-    private int curtidas =0;
 
     public void addDica(Dica dica){
 
         setDicas(dicas);
         this.dicas.add(dica);
+    }
+    @JsonManagedReference
+    public List<Dica> getDicas(){
+        // List<DicaVO_OutPut> dicas2 = new ArrayList<>();
+        
+        // for( Dica dica : this.dicas){
+        //     DicaVO_OutPut dicaAux = new DicaVO_OutPut();
+        //     dicaAux.setIdDica(dica.getIdDica());
+        //     dicaAux.setCurtidas(dica.getCurtidas());
+        //     dicaAux.setTitle(dica.getTitle());
+        //     dicas2.add(dicaAux);
+      
+        // }
+       
+        return this.dicas;
+    }
+    public void setDicas(List<Dica> dica){
+        this.dicas = dica;
+
+    }
+    public Long getIdPostagem() {
+        return idPostagem;
+    }
+    public void setIdPostagem(Long idPostagem) {
+        this.idPostagem = idPostagem;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    public ArrayList<Imagem> getImagems() {
+        return imagems;
+    }
+    public void setImagems(ArrayList<Imagem> imagems) {
+        this.imagems = imagems;
+    }
+    public ArrayList<Video> getVideos() {
+        return videos;
+    }
+    public void setVideos(ArrayList<Video> videos) {
+        this.videos = videos;
     }
 
     

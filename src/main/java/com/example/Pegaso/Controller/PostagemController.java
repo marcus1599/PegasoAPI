@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.PostagemVO;
 
@@ -70,6 +71,23 @@ public class PostagemController {
     public ResponseEntity<List<PostagemVO>>getPosts(){
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllPost());
     }
+    //Buscando todas Dicas//
+    // @GetMapping(value = "/MinhasDicas",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    // @Operation(summary = "Finds all Dicas of this Post", description = "Finds all Dicas of this Post",tags= {"Post Dicas"},responses ={
+    //     @ApiResponse(description = "Success", responseCode= "200",
+    //     content= {
+    //         @Content(mediaType= "application/json",
+    //          array = @ArraySchema(schema = @Schema(implementation = Dica.class))
+    //          )
+    //          }),
+    //     @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
+    //     @ApiResponse(description = "Unauthorized",  responseCode= "401", content =  @Content),
+    //     @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
+    //     @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
+    // })
+    // public ResponseEntity<List<Dica>>getDicas(){
+    //     return ResponseEntity.status(HttpStatus.OK).body(service.findAllDicas());
+    // }
    
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find a Post", description = "Find a Post",tags= {"Post"},responses ={

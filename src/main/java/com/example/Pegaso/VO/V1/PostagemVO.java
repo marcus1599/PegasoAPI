@@ -30,8 +30,8 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
     private List<Dica> dicas;
     private ArrayList<Imagem> imagems;
     private ArrayList<Video>videos;
-    private ArrayList<Comentario> comentarios;
-    private int curtidas =0;
+    
+   
     public PostagemVO(){
         
     }
@@ -77,18 +77,7 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
     public void setVideos(ArrayList<Video> videos) {
         this.videos = videos;
     }
-    public ArrayList<Comentario> getComentarios() {
-        return comentarios;
-    }
-    public void setComentarios(ArrayList<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
-    public int getCurtidas() {
-        return curtidas;
-    }
-    public void setCurtidas(int curtidas) {
-        this.curtidas = curtidas;
-    }
+
 
     @Override
     public int hashCode() {
@@ -100,8 +89,7 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
         result = prime * result + ((dicas == null) ? 0 : dicas.hashCode());
         result = prime * result + ((imagems == null) ? 0 : imagems.hashCode());
         result = prime * result + ((videos == null) ? 0 : videos.hashCode());
-        result = prime * result + ((comentarios == null) ? 0 : comentarios.hashCode());
-        result = prime * result + curtidas;
+      
         return result;
     }
 
@@ -142,15 +130,9 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
         if (videos == null) {
             if (other.videos != null)
                 return false;
-        } else if (!videos.equals(other.videos))
+        } else if (!videos.equals(other.videos)){
             return false;
-        if (comentarios == null) {
-            if (other.comentarios != null)
-                return false;
-        } else if (!comentarios.equals(other.comentarios))
-            return false;
-        if (curtidas != other.curtidas)
-            return false;
+            }
         return true;
     }
 

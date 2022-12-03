@@ -5,14 +5,15 @@ import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
 
-
 import com.example.Pegaso.Models.Postagem;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
+import lombok.AllArgsConstructor;
 
+
+@AllArgsConstructor
 @JsonPropertyOrder({"id_dica","title", "body", "curtidas", "post"})
 public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -23,7 +24,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
     private String title;
     private String   body;
     private int   curtidas =0;
-    private Postagem post;
+    private Postagem postagem;
     public DicaVO(){
         
     }
@@ -57,12 +58,12 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         this.body = body;
     }
 
-    public Postagem getPost() {
-        return post;
+    public Postagem getPostagem() {
+        return (Postagem)this.postagem;
     }
 
-    public void setPost(Postagem post) {
-        this.post = post;
+    public void setPostagem(Postagem postagem) {
+        this.postagem = (Postagem)this.postagem;
     }
 
     @Override
@@ -72,7 +73,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         result = prime * result + ((key == null) ? 0 : key.hashCode());
         result = prime * result + ((body == null) ? 0 : body.hashCode());
         result = prime * result + curtidas;
-        result = prime * result + ((post == null) ? 0 : post.hashCode());
+        result = prime * result + ((postagem == null) ? 0 : postagem.hashCode());
         return result;
     }
 
@@ -97,10 +98,10 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
             return false;
         if (curtidas != other.curtidas)
             return false;
-        if (post == null) {
-            if (other.post != null)
+        if (postagem == null) {
+            if (other.postagem != null)
                 return false;
-        } else if (!post.equals(other.post))
+        } else if (!postagem.equals(other.postagem))
             return false;
         return true;
     }

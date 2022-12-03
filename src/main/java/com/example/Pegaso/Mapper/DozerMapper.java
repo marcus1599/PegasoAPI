@@ -8,6 +8,7 @@ import com.example.Pegaso.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Usuário;
 import com.example.Pegaso.VO.V1.ComentarioVO_OutPut;
+import com.example.Pegaso.VO.V1.DicaVO;
 import com.example.Pegaso.VO.V1.PostagemVO_OutPut;
 import com.example.Pegaso.VO.V1.UsuarioVO_OutPut;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
@@ -33,6 +34,19 @@ public class DozerMapper {
         return destinationObjects;
 
     }
+    // public static <Dica,DicaVo> List<DicaVo> parseDicasObjects(List<Dica> origin,Class<DicaVo> destination){
+    //     List<DicaVo> destinationObject;
+        
+    //     // ((com.example.Pegaso.Models.Dica) destinationObject).setIdDica(((com.example.Pegaso.Models.Dica) origin).getIdDica());
+    //     // ((com.example.Pegaso.Models.Dica) destinationObject).setTitle(((com.example.Pegaso.Models.Dica) origin).getTitle());
+    //     // ((com.example.Pegaso.Models.Dica) destinationObject).setCurtidas(((com.example.Pegaso.Models.Dica) origin).getCurtidas());
+    //     // ((com.example.Pegaso.Models.Dica) destinationObject).setPostagem(((com.example.Pegaso.Models.Dica) origin).getPostagem());
+
+    //     return destinationObject;
+
+
+    // }
+   
 
     public static ComentarioVO_OutPut convertCommentEntitityOutPut(Comentario comentario) {
     	
@@ -49,22 +63,58 @@ public class DozerMapper {
         vo.setIdPostagem(postagem.getIdPostagem());
         vo.setNome(postagem.getNome());
         vo.setDescricao(postagem.getDescricao());
-        vo.setCurtidas(postagem.getCurtidas());
-        for( Dica dica : postagem.getDicas()){
-           List<Long> ids = new ArrayList<>();
-           ids.add(dica.getIdDica());
-           vo.setIdDica(ids);
-        }
+     
+        vo.setDicas(postagem.getDicas());
         
         return vo;
     }
 
     public static DicaVO_OutPut convertDicaEntitityOutPut(Dica dica){
         DicaVO_OutPut vo = new DicaVO_OutPut();
+
+       
         
         vo.setIdDica(dica.getIdDica());
         vo.setTitle(dica.getTitle());
         vo.setCurtidas(dica.getCurtidas());
+        vo.setPostagem(dica.getPostagem());
+        return vo;
+    }
+    public static DicaVO convertDicaEntitityToVo(Dica dica){
+        DicaVO vo = new DicaVO();
+        Postagem post = dica.getPostagem();
+        vo.setKey(dica.getIdDica());
+        vo.setTitle(dica.getTitle());
+        vo.setBody(dica.getBody());
+        vo.setCurtidas(dica.getCurtidas());
+        vo.setPostagem(post);
+        return vo;
+    }
+    public static List<DicaVO> convertListofDicaEntitityToVo(List<Dica> origin){
+        List<DicaVO> vo = new ArrayList();
+
+
+        for( Dica dica : origin){
+            DicaVO dicaAux = new DicaVO();
+            dicaAux.setKey(dica.getIdDica());
+            dicaAux.setCurtidas(dica.getCurtidas());
+            dicaAux.setTitle(dica.getTitle());
+            dicaAux.setPostagem(dica.getPostagem());
+            dicaAux.setBody(dica.getBody());
+            vo.add(dicaAux);
+      
+        }
+
+        return vo;
+    }
+    public static Dica convertDicaVoToEntity(DicaVO dica){
+        Dica vo = new Dica();
+        Postagem post = dica.getPostagem();
+        vo.setIdDica(dica.getKey());
+        vo.setTitle(dica.getTitle());
+        vo.setBody(dica.getBody());
+        vo.setCurtidas(dica.getCurtidas());
+        vo.setPostagem(post);
         return vo;
     }
 

@@ -1,6 +1,8 @@
 package com.example.Pegaso.VO.V1;
 
 
+import com.example.Pegaso.Models.Postagem;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,5 +17,6 @@ import lombok.Setter;
 public class DicaVO_OutPut {
     Long idDica;
     String   title;
+    Postagem postagem;
     int curtidas =0;
 }
