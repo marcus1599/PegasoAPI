@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Pegaso.Service.PostagemService;
-import com.example.Pegaso.VO.V1.PostagemVO;
+import com.example.Pegaso.Service.DicaService;
+
+import com.example.Pegaso.VO.V1.DicaVO;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -30,36 +32,36 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("Postagem/v1")
-@Tag(name = "Posts", description = "Endpoints for Managing Posts")
-public class PostagemController {
+@RequestMapping("/Dica")
+@Tag(name = "Dicas", description = "Endpoints for Managing Dicas")
+public class DicaController {
     
     @Autowired
-    private PostagemService service;
+    private DicaService service;
 
     @PostMapping(value = "/Adicionar",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
                 consumes ={ MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Adds a new Post", description = "Adds a new Post by passing in a JSON or XML representation of the post",tags= {"Post"},responses ={
+    @Operation(summary = "Adds a new Dica", description = "Adds a new Dica by passing in a JSON or XML representation of the post",tags= {"Post"},responses ={
                     @ApiResponse(description = "Success", responseCode= "200",
                     content= {
-                            @Content(schema = @Schema(implementation = PostagemVO.class))
+                            @Content(schema = @Schema(implementation = DicaVO.class))
                          }),
                     @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
                     @ApiResponse(description = "Unauthorized",  responseCode= "401", content =  @Content),
                     @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
                 }
             )
-   public  ResponseEntity<Object>savePostagem(@RequestBody @Valid PostagemVO postagem)
+   public  ResponseEntity<Object>saveDica(@RequestBody @Valid DicaVO dica)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.savePostagem(postagem));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica));
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Finds all Posts", description = "Finds all Posts",tags= {"Post"},responses ={
+    @Operation(summary = "Finds all Dicas", description = "Finds all Dicas",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
         content= {
             @Content(mediaType= "application/json",
-             array = @ArraySchema(schema = @Schema(implementation = PostagemVO.class))
+             array = @ArraySchema(schema = @Schema(implementation = DicaVO.class))
              )
              }),
         @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -67,15 +69,15 @@ public class PostagemController {
         @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
         @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
     })
-    public ResponseEntity<List<PostagemVO>>getPosts(){
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAllPost());
+    public ResponseEntity<List<DicaVO>>getDicas(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAllDicas());
     }
    
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Find a Post", description = "Find a Post",tags= {"Post"},responses ={
+    @Operation(summary = "Find a Dica", description = "Find a Dica",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
         content= {
-            @Content(schema = @Schema(implementation = PostagemVO.class))
+            @Content(schema = @Schema(implementation = DicaVO.class))
              
              }),
         @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -84,16 +86,16 @@ public class PostagemController {
         @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
     })
 
-    public ResponseEntity<Object> getOnePost(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Object> getOneDica(@PathVariable(value = "id") Long id){
        
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.findPostById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
     @GetMapping(value = "/vo/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Find a Post", description = "Find a Post",tags= {"Post"},responses ={
+    @Operation(summary = "Find a Dica", description = "Find a Dica",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
         content= {
-            @Content(schema = @Schema(implementation = PostagemVO.class))
+            @Content(schema = @Schema(implementation = DicaVO.class))
              
              }),
         @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -101,15 +103,15 @@ public class PostagemController {
         @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
         @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
     })
-    public ResponseEntity<Object> getOnePostCostom(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Object> getOneDicaCostom(@PathVariable(value = "id") Long id){
        
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.findByIdPostagemCostomized(id));
+        return ResponseEntity.status(HttpStatus.OK).body(service.findByIdDicaCostomized(id));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletes a Post", description = "Deletes a Person by passing id",
-               tags= {"Post"},
+    @Operation(summary = "Deletes a Dica", description = "Deletes a Dica by passing id",
+               tags= {"Dica"},
                responses ={
         @ApiResponse(description = "No Content",    responseCode= "204", content =  @Content),
         @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -117,10 +119,10 @@ public class PostagemController {
         @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
         @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
     })
-    public ResponseEntity<Object> deletePost(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Object> deleteDica(@PathVariable(value = "id") Long id){
 
-        service.deletePost(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Post deleted Sucefully");
+        service.deleteDica(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Dica deleted Sucefully");
     }
 
     @PutMapping(value = "/Update/{id}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
@@ -130,7 +132,7 @@ public class PostagemController {
              tags= {"Post"},responses ={
                     @ApiResponse(description = "Success", responseCode= "200",
                     content= {
-                        @Content(schema = @Schema(implementation = PostagemVO.class))
+                        @Content(schema = @Schema(implementation = DicaVO.class))
                          
                          }),
                     @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -138,12 +140,12 @@ public class PostagemController {
                     @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
                     @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
                 })
-    public ResponseEntity<Object> updatePost(@PathVariable(value = "id") Long id,
-     @RequestBody @Valid PostagemVO post)
+    public ResponseEntity<Object> updateDica(@PathVariable(value = "id") Long id,
+     @RequestBody @Valid DicaVO dica)
      {
         
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(post,id));
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(dica,id));
     }
 
     

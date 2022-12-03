@@ -2,7 +2,9 @@ package com.example.Pegaso.Mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Postagem;
+import com.example.Pegaso.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.VO.V1.PostagemVO_OutPut;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
@@ -34,6 +36,14 @@ public class DozerMapper {
         vo.setNome(postagem.getNome());
         vo.setDescricao(postagem.getDescricao());
         vo.setCurtidas(postagem.getCurtidas());
+        return vo;
+    }
+    public static DicaVO_OutPut convertDicaEntitityOutPut(Dica dica){
+        DicaVO_OutPut vo = new DicaVO_OutPut();
+        
+        vo.setIdDica(dica.getIdDica());
+        vo.setTitle(dica.getTitle());
+        vo.setCurtidas(dica.getCurtidas());
         return vo;
     }
 }
