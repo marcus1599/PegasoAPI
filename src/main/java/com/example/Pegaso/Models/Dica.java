@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -82,6 +83,7 @@ public class Dica implements Serializable{
         this.curtidas = curtidas;
     }
 
+    @JsonManagedReference
     @JsonBackReference
     public Postagem getPostagem() {
         return (Postagem)this.postagem;

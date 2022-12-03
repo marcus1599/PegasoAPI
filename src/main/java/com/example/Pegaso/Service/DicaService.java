@@ -29,24 +29,23 @@ public class DicaService {
     private DicaRepository repository;
     @Autowired
     private PostagemRepository postRepository;
+    
 
 
-    public DicaVO saveDica(DicaVO dicaVO,Long idPost)
+    public DicaVO saveDica(DicaVO dicaVO,Postagem postagem)
         {   
+            
+            
 
-            var entityPost = postRepository.findById(idPost).orElseThrow(
-                () -> new ResourceNotFoundException("Searched post with specified id not found")
-                );
-
-                dicaVO.setPostagem(entityPost);
+                dicaVO.setPostagem(postagem);
                 //Conversão de VO para entidade
                 var entity = DozerMapper.parseObject(dicaVO,Dica.class);
                 
                 //Adicionando a Dica a Postagem
                 
               //  entity.setPostagem((Postagem)entityPost);
-                entityPost.addDica(entity);
-                postRepository.save(entityPost);
+                postagem.addDica(entity);
+                postRepository.save(postagem);
                 
                 
                 //Salvando no banco de dados e adicionando em uma variável

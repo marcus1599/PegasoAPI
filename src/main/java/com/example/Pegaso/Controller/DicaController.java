@@ -2,7 +2,7 @@ package com.example.Pegaso.Controller;
 
 import javax.validation.Valid;
 
-
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Pegaso.Models.Postagem;
+import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.Service.DicaService;
 import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.DicaVO;
@@ -28,6 +30,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -37,9 +40,10 @@ public class DicaController {
     
     @Autowired
     private DicaService service;
-
     @Autowired
-    private PostagemService postagemService;
+    private PostagemRepository postRepository;
+
+ //--------------------Adicionar Dica----------------------------------//
 
     @PostMapping(value = "/Adicionar",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
                 consumes ={ MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_XML_VALUE})
@@ -55,8 +59,15 @@ public class DicaController {
             )
    public  ResponseEntity<Object>saveDica(@RequestBody @Valid DicaVO dica,@PathVariable(value = "idPostagem") Long idPostagem)
     {
+        Optional<Postagem> entityPostOptional = postRepository.findById(idPostagem);
+        if(!entityPostOptional.isPresent())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post Not Found");
+        }
+        Postagem postagem = new Postagem();
+        BeanUtils.copyProperties(postagem, entityPostOptional);
    
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica,idPostagem));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica,postagem));
     }
 
     @GetMapping( produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
