@@ -29,7 +29,7 @@ public class Imagem {
     String endereco;
 
     @Column
-    int curtidas;
+    Integer curtidas;
 
 
     
