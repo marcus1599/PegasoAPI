@@ -10,9 +10,10 @@ import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Dica;
 
 import com.example.Pegaso.Repository.DicaRepository;
-
+import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.VO.V1.DicaVO;
 import com.example.Pegaso.VO.V1.DicaVO_OutPut;
+import com.example.Pegaso.VO.V1.PostagemVO;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;
 
 import java.util.List;
@@ -23,13 +24,24 @@ public class DicaService {
     
     @Autowired
     private DicaRepository repository;
+    @Autowired
+    private PostagemRepository postRepository;
 
-    public DicaVO saveDica(DicaVO dicaVO)
+
+    public DicaVO saveDica(DicaVO dicaVO,Long idPost)
         {
 
                 //Conversão de VO para entidade
                 var entity = DozerMapper.parseObject(dicaVO, Dica.class);
-
+                
+                //Adicionando a Dica a Postagem
+                var entityPost = postRepository.findById(idPost).orElseThrow(
+                () -> new ResourceNotFoundException("Searched post with specified id not found")
+                );
+                
+                entityPost.addDica(entity);
+                postRepository.save(entityPost);
+                
                 //Salvando no banco de dados e adicionando em uma variável
                 var dica = repository.save(entity);
 

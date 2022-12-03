@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Service.DicaService;
-
+import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.DicaVO;
-
+import com.example.Pegaso.VO.V1.PostagemVO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -32,12 +33,15 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/Dica")
+@RequestMapping("/Dicas/{idPostagem}")
 @Tag(name = "Dicas", description = "Endpoints for Managing Dicas")
 public class DicaController {
     
     @Autowired
     private DicaService service;
+
+    @Autowired
+    private PostagemService postagemService;
 
     @PostMapping(value = "/Adicionar",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
                 consumes ={ MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_XML_VALUE})
@@ -51,12 +55,13 @@ public class DicaController {
                     @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
                 }
             )
-   public  ResponseEntity<Object>saveDica(@RequestBody @Valid DicaVO dica)
+   public  ResponseEntity<Object>saveDica(@RequestBody @Valid DicaVO dica,@PathVariable(value = "idPostagem") Long idPostagem)
     {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica));
+   
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica,idPostagem));
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @GetMapping( produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Finds all Dicas", description = "Finds all Dicas",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
         content= {
@@ -73,7 +78,7 @@ public class DicaController {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllDicas());
     }
    
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/Dica/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find a Dica", description = "Find a Dica",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
         content= {

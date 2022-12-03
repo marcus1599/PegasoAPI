@@ -50,6 +50,12 @@ public class DozerMapper {
         vo.setNome(postagem.getNome());
         vo.setDescricao(postagem.getDescricao());
         vo.setCurtidas(postagem.getCurtidas());
+        for( Dica dica : postagem.getDicas()){
+           List<Long> ids = new ArrayList<>();
+           ids.add(dica.getIdDica());
+           vo.setIdDica(ids);
+        }
+        
         return vo;
     }
 

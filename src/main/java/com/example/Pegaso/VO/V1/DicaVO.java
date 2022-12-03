@@ -13,11 +13,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
 
-@JsonPropertyOrder({"idDica","title", "body", "curtidas", "post"})
+@JsonPropertyOrder({"id_dica","title", "body", "curtidas", "post"})
 public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable{
     private static final long serialVersionUID = 1L;
   
-    @JsonProperty("idDica")
+    @JsonProperty("id_dica")
     @Mapping("idDica")
     private Long key;
     private String title;

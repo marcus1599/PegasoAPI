@@ -2,12 +2,18 @@ package com.example.Pegaso.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +32,7 @@ public class Postagem  implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_postagem")
     private Long idPostagem;
 
     @Column (nullable = false)
@@ -33,10 +40,11 @@ public class Postagem  implements Serializable{
 
     @Column (nullable = false)
     private String   descricao;
-    
-    @Column (nullable = true)
-    @OneToMany
-    private ArrayList<Dica> dicas;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "post")
+ 
+
+    private List<Dica> dicas;
 
     @Column (nullable = true)
     private ArrayList<Imagem> imagems;
@@ -46,6 +54,12 @@ public class Postagem  implements Serializable{
 
     @Column(nullable = true)
     private int curtidas =0;
+
+    public void addDica(Dica dica){
+
+        setDicas(dicas);
+        this.dicas.add(dica);
+    }
 
     
 }

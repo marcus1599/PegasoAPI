@@ -1,11 +1,15 @@
 package com.example.Pegaso.Models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +32,7 @@ import lombok.Setter;
 public class Dica {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_dica")
     Long idDica;
 
     @Column(nullable = false)
@@ -38,7 +43,7 @@ public class Dica {
     @Column
     int curtidas;
 
-    @ManyToOne
-    @JoinColumn(name = "idPostagem")
-    Postagem post;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_postagem")
+    private Postagem post;
 }

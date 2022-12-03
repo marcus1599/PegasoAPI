@@ -3,9 +3,12 @@ package com.example.Pegaso.VO.V1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Imagem;
@@ -15,16 +18,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
 
-@JsonPropertyOrder({"idPostagem", "nome", "descricao", "dicas", "imagems","videos","comentarios","curtidas"})
+@JsonPropertyOrder({"id_postagem", "nome", "descricao", "dicas", "imagems","videos","comentarios","curtidas"})
 public class PostagemVO extends RepresentationModel<PostagemVO>  implements Serializable{
     private static final long serialVersionUID = 1L;
   
-    @JsonProperty("idPostagem")
+    @JsonProperty("id_postagem")
     @Mapping("idPostagem")
     private Long key;
     private String   nome;
     private String   descricao;
-    private ArrayList<Dica> dicas;
+    private List<Dica> dicas;
     private ArrayList<Imagem> imagems;
     private ArrayList<Video>videos;
     private ArrayList<Comentario> comentarios;
@@ -33,6 +36,11 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
         
     }
 
+    public void addDica(DicaVO dicaVo){
+        var dicaEntity = DozerMapper.parseObject(dicaVo, Dica.class);
+    
+        this.dicas.add(dicaEntity);
+    }
     public Long getKey() {
         return key;
     }
@@ -51,10 +59,10 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public ArrayList<Dica> getDicas() {
+    public List<Dica> getDicas() {
         return dicas;
     }
-    public void setDicas(ArrayList<Dica> dicas) {
+    public void setDicas(List<Dica> dicas) {
         this.dicas = dicas;
     }
     public ArrayList<Imagem> getImagems() {
