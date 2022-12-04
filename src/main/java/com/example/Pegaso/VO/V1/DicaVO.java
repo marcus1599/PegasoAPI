@@ -63,7 +63,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
     }
 
     public void setPostagem(Postagem postagem) {
-        this.postagem = (Postagem)this.postagem;
+        this.postagem = (Postagem)postagem;
     }
 
     @Override
@@ -71,6 +71,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result + ((key == null) ? 0 : key.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((body == null) ? 0 : body.hashCode());
         result = prime * result + curtidas;
         result = prime * result + ((postagem == null) ? 0 : postagem.hashCode());
@@ -90,6 +91,11 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
             if (other.key != null)
                 return false;
         } else if (!key.equals(other.key))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
             return false;
         if (body == null) {
             if (other.body != null)

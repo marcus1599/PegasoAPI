@@ -40,7 +40,7 @@ public class Postagem  implements Serializable{
     @Column (nullable = false)
     private String   nome;
 
-    @Column (nullable = false)
+    @Column (nullable = true)
     private String   descricao;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "postagem")

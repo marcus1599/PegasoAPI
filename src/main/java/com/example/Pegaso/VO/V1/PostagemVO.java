@@ -4,12 +4,10 @@ package com.example.Pegaso.VO.V1;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.hateoas.RepresentationModel;
 
 import com.example.Pegaso.Mapper.DozerMapper;
-import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Imagem;
 import com.example.Pegaso.Models.Video;
@@ -17,7 +15,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
+import lombok.AllArgsConstructor;
 
+
+@AllArgsConstructor
 @JsonPropertyOrder({"id_postagem", "nome", "descricao", "dicas", "imagems","videos","comentarios","curtidas"})
 public class PostagemVO extends RepresentationModel<PostagemVO>  implements Serializable{
     private static final long serialVersionUID = 1L;

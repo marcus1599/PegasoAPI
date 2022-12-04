@@ -32,20 +32,13 @@ public class DicaService {
     
 
 
-    public DicaVO saveDica(DicaVO dicaVO,Postagem postagem)
+    public DicaVO saveDica(DicaVO dicaVO)
         {   
             
-            
-
-                dicaVO.setPostagem(postagem);
-                //Conversão de VO para entidade
                 var entity = DozerMapper.parseObject(dicaVO,Dica.class);
                 
-                //Adicionando a Dica a Postagem
-                
-              //  entity.setPostagem((Postagem)entityPost);
-                postagem.addDica(entity);
-                postRepository.save(postagem);
+          
+               
                 
                 
                 //Salvando no banco de dados e adicionando em uma variável
@@ -60,6 +53,17 @@ public class DicaService {
     public List<DicaVO> findAllDicas()
         {
             var dica = repository.findAll();
+            var dicaVO = DozerMapper.convertListofDicaEntitityToVo(dica);
+
+            dicaVO.stream()
+            .forEach(p-> p.add(linkTo(methodOn(DicaController.class)
+            .getOneDica(p.getKey())).withSelfRel()));
+
+            return dicaVO;
+        }
+        public List<DicaVO> findAllDicasByPostagem(Postagem postagem)
+        {
+            var dica = repository.findAllDicaByPostagem(postagem);
             var dicaVO = DozerMapper.convertListofDicaEntitityToVo(dica);
 
             dicaVO.stream()

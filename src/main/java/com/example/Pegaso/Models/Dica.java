@@ -83,10 +83,10 @@ public class Dica implements Serializable{
         this.curtidas = curtidas;
     }
 
-    @JsonManagedReference
+    
     @JsonBackReference
     public Postagem getPostagem() {
-        return (Postagem)this.postagem;
+        return this.postagem;
     }
 
     public void setPostagem(Postagem postagem) {
