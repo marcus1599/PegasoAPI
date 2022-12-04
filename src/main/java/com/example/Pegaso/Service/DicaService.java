@@ -32,11 +32,14 @@ public class DicaService {
     
 
 
-    public DicaVO saveDica(DicaVO dicaVO)
+    public DicaVO saveDica(DicaVO dicaVO,PostagemVO postagemVO)
         {   
             
                 var entity = DozerMapper.parseObject(dicaVO,Dica.class);
-                
+                var entityPost = DozerMapper.parseObject(postagemVO, Postagem.class);
+                entityPost.addDica(entity);
+
+                entity.setPostagem(entityPost);
           
                
                 

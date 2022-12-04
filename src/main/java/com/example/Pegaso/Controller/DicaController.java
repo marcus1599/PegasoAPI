@@ -21,7 +21,7 @@ import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.Service.DicaService;
-
+import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.DicaVO;
 import com.example.Pegaso.VO.V1.PostagemVO;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;
@@ -46,6 +46,8 @@ public class DicaController {
     private DicaService service;
     @Autowired
     private PostagemRepository postRepository;
+    @Autowired
+    private PostagemService postService;
 
  //--------------------Adicionar Dica----------------------------------//
 
@@ -72,16 +74,14 @@ public class DicaController {
   //       var postagem = postRepository.findById(idPostagem);
 
         // BeanUtils.copyProperties(entityPostOptional, postagem);
-        var dicaEntity = DozerMapper.parseObject(dica, Dica.class);
-        var entityPost =  postRepository.findById(idPostagem).orElseThrow(
-                () -> new ResourceNotFoundException("Searched post with specified id not found")
-            );
-            
-            entityPost.addDica(dicaEntity);
-            dica.setPostagem(entityPost);
+
+       
+       
+         var entityPost =  postService.findPostById(idPostagem);
+          
          
             
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveDica(dica,entityPost));
     }
 //-----------------------------------Buscar Todas Dicas--------------------------//
     @GetMapping( produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})

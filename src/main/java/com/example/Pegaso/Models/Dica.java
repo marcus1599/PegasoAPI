@@ -47,7 +47,7 @@ public class Dica implements Serializable{
     @Column
     private int curtidas;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_postagem")
     private Postagem postagem ;
 
