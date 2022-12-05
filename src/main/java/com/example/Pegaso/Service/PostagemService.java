@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.example.Pegaso.Controller.DicaController;
 import com.example.Pegaso.Controller.PostagemController;
 import com.example.Pegaso.Mapper.DozerMapper;
-import com.example.Pegaso.Models.Dica;
+
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.VO.V1.PostagemVO;
@@ -45,14 +46,13 @@ public class PostagemService {
 
             postagemVO.stream()
             .forEach(p-> p.add(linkTo(methodOn(PostagemController.class)
-            .getOnePost(p.getKey())).withSelfRel()));
+            .getOnePost(p.getKey())).withRel("Detalhes")));
+            postagemVO.stream()
+            .forEach(p-> p.add(linkTo(methodOn(DicaController.class)
+            .getDicasByPostagem(p.getKey())).withRel("Dicas")));
 
             return postagemVO;
         }
-    // public List<Dica>findAllDicas(){
-
-    //     return repository.findAllDicas();
-    // }
 
     public PostagemVO findPostById(Long id)
         {

@@ -65,18 +65,7 @@ public class DicaController {
             )
    public  ResponseEntity<Object>saveDica(@RequestBody @Valid DicaVO dica,@PathVariable(value = "idPostagem") Long idPostagem)
     {
-        // Optional<Postagem> entityPostOptional = postRepository.findById(idPostagem);
-        // if(!entityPostOptional.isPresent())
-        // {
-        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post Not Found");
-        // }
-    
-  //       var postagem = postRepository.findById(idPostagem);
 
-        // BeanUtils.copyProperties(entityPostOptional, postagem);
-
-       
-       
          var entityPost =  postService.findPostById(idPostagem);
           
          
@@ -100,33 +89,29 @@ public class DicaController {
     public ResponseEntity<List<DicaVO>>getDicas(){
         return ResponseEntity.status(HttpStatus.OK).body(service.findAllDicas());
     }
-//---------------------------------Buscar todas de uma Postagem--------------------------------//
-
-@GetMapping(value = "/{idPostagem}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-@Operation(summary = "Finds all Dicas", description = "Finds all Dicas",tags= {"Dica"},responses ={
-    @ApiResponse(description = "Success", responseCode= "200",
-    content= {
-        @Content(mediaType= "application/json",
-         array = @ArraySchema(schema = @Schema(implementation = DicaVO.class))
-         )
-         }),
-    @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
-    @ApiResponse(description = "Unauthorized",  responseCode= "401", content =  @Content),
-    @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
-    @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
-})
-public ResponseEntity<List<DicaVO>> getDicasByPostagem(@PathVariable(value = "idPostagem")Long idPostagem){
-    Optional<Postagem> entityPostOptional = postRepository.findById(idPostagem);
-    if(!entityPostOptional.isPresent())
-    {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    //----------------------------------Buscar Todas Dicas por postagem--------------------------//
+    @GetMapping(value = "FindBy/{idPostagem}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Finds all Dicas", description = "Finds all Dicas",tags= {"Dica"},responses ={
+        @ApiResponse(description = "Success", responseCode= "200",
+        content= {
+            @Content(mediaType= "application/json",
+             array = @ArraySchema(schema = @Schema(implementation = DicaVO.class))
+             )
+             }),
+        @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
+        @ApiResponse(description = "Unauthorized",  responseCode= "401", content =  @Content),
+        @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
+        @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
+    })
+    public ResponseEntity<List<DicaVO>>getDicasByPostagem(@PathVariable(value = "idPostagem") Long idPostagem ){
+        
+        var entity =  postRepository.findById(idPostagem).orElseThrow(
+                () -> new ResourceNotFoundException("Searched post with specified id not found")
+            );
+        return ResponseEntity.status(HttpStatus.OK).body(service.findByPostagemContainin(entity));
     }
-    var postagem = new Postagem();
-    BeanUtils.copyProperties(postagem, entityPostOptional);
-    return ResponseEntity.status(HttpStatus.OK).body(service.findAllDicasByPostagem(postagem));
-}
-   
-    @GetMapping(value = "/Dica/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+//-------------------------------------Buscar Uma dica----------------------------//
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find a Dica", description = "Find a Dica",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
         content= {
@@ -144,6 +129,7 @@ public ResponseEntity<List<DicaVO>> getDicasByPostagem(@PathVariable(value = "id
 
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
+//-------------------------------------Busca uma dica Personalizada--------------------------------//
     @GetMapping(value = "/vo/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Find a Dica", description = "Find a Dica",tags= {"Dica"},responses ={
         @ApiResponse(description = "Success", responseCode= "200",
@@ -161,7 +147,7 @@ public ResponseEntity<List<DicaVO>> getDicasByPostagem(@PathVariable(value = "id
 
         return ResponseEntity.status(HttpStatus.OK).body(service.findByIdDicaCostomized(id));
     }
-
+//------------------------------------Excluir Dica por id------------------------------------//
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletes a Dica", description = "Deletes a Dica by passing id",
                tags= {"Dica"},
@@ -177,12 +163,12 @@ public ResponseEntity<List<DicaVO>> getDicasByPostagem(@PathVariable(value = "id
         service.deleteDica(id);
         return ResponseEntity.status(HttpStatus.OK).body("Dica deleted Sucefully");
     }
-
+//----------------------------------------------Atualizar dica--------------------------------//
     @PutMapping(value = "/Update/{id}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
                 consumes ={ MediaType.APPLICATION_JSON_VALUE , MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Updates a Post",
-             description = "Updates a Post by passing in a JSON or XML representation of the post!",
-             tags= {"Post"},responses ={
+    @Operation(summary = "Updates a Dica",
+             description = "Updates a dica by passing in a JSON or XML representation of the dica!",
+             tags= {"Dica"},responses ={
                     @ApiResponse(description = "Success", responseCode= "200",
                     content= {
                         @Content(schema = @Schema(implementation = DicaVO.class))

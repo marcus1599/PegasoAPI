@@ -11,13 +11,12 @@ import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.DicaRepository;
-import com.example.Pegaso.Repository.PostagemRepository;
+
 import com.example.Pegaso.VO.V1.DicaVO;
 import com.example.Pegaso.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.VO.V1.PostagemVO;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;
 
-import ch.qos.logback.classic.Logger;
 
 import java.util.List;
 
@@ -27,8 +26,7 @@ public class DicaService {
     
     @Autowired
     private DicaRepository repository;
-    @Autowired
-    private PostagemRepository postRepository;
+
     
 
 
@@ -64,9 +62,10 @@ public class DicaService {
 
             return dicaVO;
         }
-        public List<DicaVO> findAllDicasByPostagem(Postagem postagem)
+      
+        public List<DicaVO> findByPostagemContainin(Postagem postagem)
         {
-            var dica = repository.findAllDicaByPostagem(postagem);
+            var dica = repository.findByPostagemEquals(postagem);
             var dicaVO = DozerMapper.convertListofDicaEntitityToVo(dica);
 
             dicaVO.stream()
@@ -75,7 +74,6 @@ public class DicaService {
 
             return dicaVO;
         }
-
     public DicaVO findById(Long id)
         {
 
