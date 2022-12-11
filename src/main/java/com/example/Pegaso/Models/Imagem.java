@@ -4,11 +4,12 @@ import javax.persistence.*;
 
 
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Imagem {
 
     @Id
