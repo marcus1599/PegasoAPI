@@ -7,6 +7,7 @@ import com.example.Pegaso.exceptions.ResourceNotFoundException;
 import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Repository.ComentarioRepository;
+import com.example.Pegaso.Repository.DicaRepository;
 import com.example.Pegaso.VO.V1.ComentarioVO;
 import com.example.Pegaso.VO.V1.ComentarioVO_OutPut;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -18,6 +19,9 @@ public class ComentarioService {
 	
 	@Autowired
     private ComentarioRepository repositoryComment;
+	
+	@Autowired
+	private DicaRepository repository;
 	
 	public ComentarioVO saveComment(ComentarioVO comentarioVO) {
 		

@@ -2,11 +2,12 @@ package com.example.Pegaso.VO.V1;
 
 import java.io.Serializable;
 import org.springframework.hateoas.RepresentationModel;
+import com.example.Pegaso.Models.Dica;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"idComentario", "corpo", "curtidas"})
+@JsonPropertyOrder({"idComentario", "corpo", "curtidas", "dica"})
 public class ComentarioVO extends RepresentationModel<ComentarioVO> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -16,6 +17,7 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
     private Long key;
     private String corpo;
     private int curtidas = 0;
+    private Dica dica;
     
     public ComentarioVO() { }
 
@@ -31,6 +33,10 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
     
     public void setCurtidas(int curtidas) { this.curtidas = curtidas; }
     
+    public Dica getDica() { return (Dica)this.dica; }
+
+    public void setDica(Dica dica) { this.dica = (Dica)dica; }
+    
     @Override
     public int hashCode() {
     	
@@ -40,6 +46,7 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
         result = prime * result + ((key == null) ? 0 : key.hashCode());
         result = prime * result + ((corpo == null) ? 0 : corpo.hashCode());
         result = prime * result + curtidas;
+        result = prime * result + ((dica == null) ? 0 : dica.hashCode());
         return result;
     }
     
@@ -76,7 +83,14 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
         if (curtidas != other.curtidas)
             return false;
         
+        if (dica == null) {
+            if (other.dica != null)
+                return false;
+        } 
+        
+        else if (!dica.equals(other.dica))
+            return false;
+        
         return true;
     }
-
 }

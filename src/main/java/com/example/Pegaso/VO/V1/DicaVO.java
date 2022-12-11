@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Postagem;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -14,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 
 @AllArgsConstructor
-@JsonPropertyOrder({"id_dica","title", "body", "curtidas", "post"})
+@JsonPropertyOrder({"id_dica","title", "body", "curtidas", "comment", "post"})
 public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable{
     private static final long serialVersionUID = 1L;
   
@@ -24,6 +25,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
     private String title;
     private String   body;
     private int   curtidas =0;
+    private Comentario comentario;
     private Postagem postagem;
     public DicaVO(){
         
@@ -58,6 +60,14 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         this.body = body;
     }
 
+    public Comentario getComentario() {
+        return (Comentario)this.comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = (Comentario)comentario;
+    }
+    
     public Postagem getPostagem() {
         return (Postagem)this.postagem;
     }
@@ -74,6 +84,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((body == null) ? 0 : body.hashCode());
         result = prime * result + curtidas;
+        result = prime * result + ((comentario == null) ? 0 : comentario.hashCode());
         result = prime * result + ((postagem == null) ? 0 : postagem.hashCode());
         return result;
     }
@@ -103,6 +114,11 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         } else if (!body.equals(other.body))
             return false;
         if (curtidas != other.curtidas)
+            return false;
+        if (comentario == null) {
+            if (other.comentario != null)
+                return false;
+        } else if (!comentario.equals(other.comentario))
             return false;
         if (postagem == null) {
             if (other.postagem != null)
