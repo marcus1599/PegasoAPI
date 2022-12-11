@@ -1,39 +1,25 @@
 package com.example.Pegaso.Models;
 
 import java.io.Serializable;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-/*
- * - IdDica : Int
-- titulo : String
-- descricao : String
-- curtidas: int
- */
-
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Dica implements Serializable{
-    private static final long serialVersionUID = 1L;
+    
+	private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_dica")
@@ -41,12 +27,17 @@ public class Dica implements Serializable{
 
     @Column(nullable = false)
     private String title;
+    
     @Column(nullable = false)
     private String body;
 
     @Column
     private int curtidas;
 
+    @OneToMany()
+    @JoinColumn(name = "id_comentario")
+    private Comentario comentario;
+    
     @ManyToOne()
     @JoinColumn(name = "id_postagem")
     private Postagem postagem ;
@@ -91,5 +82,14 @@ public class Dica implements Serializable{
 
     public void setPostagem(Postagem postagem) {
         this.postagem = (Postagem)postagem;
+    }
+    
+    @JsonBackReference
+    public Comentario getComentario() {
+        return this.comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = (Comentario)comentario;
     }
 }

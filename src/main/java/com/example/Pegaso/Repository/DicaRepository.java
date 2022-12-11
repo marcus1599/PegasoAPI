@@ -14,5 +14,6 @@ import com.example.Pegaso.Models.Postagem;
 public interface DicaRepository extends JpaRepository<Dica,Long> {
 
  public List<Dica> findByPostagemEquals(Postagem postagem);
+
     
 }
