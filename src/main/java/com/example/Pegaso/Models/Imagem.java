@@ -31,6 +31,10 @@ public class Imagem {
     @Column
     Integer curtidas;
 
+    @Column
+    @Lob
+    private byte[] figure;
+
 
     
 }

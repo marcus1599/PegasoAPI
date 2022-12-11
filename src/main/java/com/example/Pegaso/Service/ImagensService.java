@@ -6,13 +6,21 @@ import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.ImagensRepositiry;
 import com.example.Pegaso.Repository.PostagemRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,15 +35,9 @@ public class ImagensService {
         Imagem imagem = new Imagem();
 
         Long idPostagem = dto.getIdPostagem();
-
         postRepository.findById(idPostagem);
 
-        Postagem postagem =
-                postRepository
-                        .findById(idPostagem)
-                        .orElseThrow( () ->
-                                new ResponseStatusException(
-                                        HttpStatus.BAD_REQUEST, "Postagem inexistente."));
+        Postagem postagem = postExiste(idPostagem);
 
         imagem.setTitulo(dto.getTitulo());
         imagem.setDescricao(dto.getDescricao());
@@ -46,12 +48,31 @@ public class ImagensService {
         return repositiry.save(imagem);
     }
 
+    public byte[] addPhoto(  Long id, Part arquivo){
+
+        Optional<Imagem> contato = repositiry.findById(id);
+
+        return contato.map(c -> {
+            try{
+                InputStream is = arquivo.getInputStream();
+                byte[] bytes = new byte[(int) arquivo.getSize()];
+                IOUtils.readFully(is, bytes);
+                c.setFigure(bytes);
+                repositiry.save(c);
+                is.close();
+
+                return bytes;
+
+            }catch (IOException e){
+                return null;
+            }
+        }).orElse(null);
+    }
+
 
     public List<Imagem> findTudo(){
         return repositiry.findAll();
     }
-
-
 
 
     private Postagem postExiste(Long idPost){
