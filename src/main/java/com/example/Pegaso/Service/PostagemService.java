@@ -7,6 +7,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.example.Pegaso.Controller.PostagemController;
 import com.example.Pegaso.Mapper.DozerMapper;
+import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.VO.V1.PostagemVO;
@@ -48,6 +49,10 @@ public class PostagemService {
 
             return postagemVO;
         }
+    // public List<Dica>findAllDicas(){
+
+    //     return repository.findAllDicas();
+    // }
 
     public PostagemVO findPostById(Long id)
         {

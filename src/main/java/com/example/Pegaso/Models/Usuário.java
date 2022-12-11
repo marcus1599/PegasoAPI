@@ -1,41 +1,37 @@
 package com.example.Pegaso.Models;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-/*- Id_user : Int
-- nome : String
-- biografia : String
-- email : String
- */
+@NoArgsConstructor
 @Setter
 @Getter
 @AllArgsConstructor
+@ToString
 @Entity
-public class Usuário {
+public class Usuário implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long idUsuario;
+    private Long idUsuario;
 
     @Column(nullable = false)
-    String nome;
+    private String nome;
 
     @Column(nullable = true)
-    String biografia;
+    private String biografia;
 
     @Column(nullable = false)
-    String email;
-
-    // @Column(nullable = true)
-    // GestaoPostagem userPostagens;
-    
+    private String email;
 }

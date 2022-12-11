@@ -3,10 +3,11 @@ package com.example.Pegaso.VO.V1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.example.Pegaso.Models.Comentario;
+import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Imagem;
 import com.example.Pegaso.Models.Video;
@@ -14,25 +15,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
+import lombok.AllArgsConstructor;
 
-@JsonPropertyOrder({"idPostagem", "nome", "descricao", "dicas", "imagems","videos","comentarios","curtidas"})
+
+@AllArgsConstructor
+@JsonPropertyOrder({"id_postagem", "nome", "descricao", "dicas", "imagems","videos","comentarios","curtidas"})
 public class PostagemVO extends RepresentationModel<PostagemVO>  implements Serializable{
     private static final long serialVersionUID = 1L;
   
-    @JsonProperty("idPostagem")
+    @JsonProperty("id_postagem")
     @Mapping("idPostagem")
     private Long key;
     private String   nome;
     private String   descricao;
-    private ArrayList<Dica> dicas;
+    private List<Dica> dicas;
     private ArrayList<Imagem> imagems;
     private ArrayList<Video>videos;
-    private ArrayList<Comentario> comentarios;
-    private int curtidas =0;
+    
+   
     public PostagemVO(){
         
     }
 
+    public void addDica(DicaVO dicaVo){
+        var dicaEntity = DozerMapper.parseObject(dicaVo, Dica.class);
+    
+        this.dicas.add(dicaEntity);
+    }
     public Long getKey() {
         return key;
     }
@@ -51,10 +60,10 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public ArrayList<Dica> getDicas() {
+    public List<Dica> getDicas() {
         return dicas;
     }
-    public void setDicas(ArrayList<Dica> dicas) {
+    public void setDicas(List<Dica> dicas) {
         this.dicas = dicas;
     }
     public ArrayList<Imagem> getImagems() {
@@ -69,18 +78,7 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
     public void setVideos(ArrayList<Video> videos) {
         this.videos = videos;
     }
-    public ArrayList<Comentario> getComentarios() {
-        return comentarios;
-    }
-    public void setComentarios(ArrayList<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
-    public int getCurtidas() {
-        return curtidas;
-    }
-    public void setCurtidas(int curtidas) {
-        this.curtidas = curtidas;
-    }
+
 
     @Override
     public int hashCode() {
@@ -92,8 +90,7 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
         result = prime * result + ((dicas == null) ? 0 : dicas.hashCode());
         result = prime * result + ((imagems == null) ? 0 : imagems.hashCode());
         result = prime * result + ((videos == null) ? 0 : videos.hashCode());
-        result = prime * result + ((comentarios == null) ? 0 : comentarios.hashCode());
-        result = prime * result + curtidas;
+      
         return result;
     }
 
@@ -134,15 +131,9 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
         if (videos == null) {
             if (other.videos != null)
                 return false;
-        } else if (!videos.equals(other.videos))
+        } else if (!videos.equals(other.videos)){
             return false;
-        if (comentarios == null) {
-            if (other.comentarios != null)
-                return false;
-        } else if (!comentarios.equals(other.comentarios))
-            return false;
-        if (curtidas != other.curtidas)
-            return false;
+            }
         return true;
     }
 

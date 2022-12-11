@@ -1,9 +1,7 @@
 package com.example.Pegaso.VO.V1;
 
 
-import java.util.List;
-
-import com.example.Pegaso.Models.Dica;
+import com.example.Pegaso.Models.Postagem;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,10 +14,9 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostagemVO_OutPut {
-    Long idPostagem;
-    String   nome;
-    String   descricao;
-    List<Dica> dicas;
-    
+public class DicaVO_OutPut {
+    Long idDica;
+    String   title;
+    Postagem postagem;
+    int curtidas =0;
 }
