@@ -10,5 +10,6 @@ public class ImagemDTO {
     private String descricao;
     private String endereco;
     private Integer curtidas;
+    private byte[] figure;
     private Long idPostagem;
 }
