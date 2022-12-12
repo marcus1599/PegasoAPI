@@ -2,11 +2,13 @@ package com.example.Pegaso.VO.V1;
 
 import java.io.Serializable;
 import org.springframework.hateoas.RepresentationModel;
+
+import com.example.Pegaso.Models.Comentario;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"idUsuario", "nome", "biografia", "email"})
+@JsonPropertyOrder({"idUsuario", "nome", "biografia", "email", "comentario"})
 public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,7 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     private String nome;
     private String biografia;
     private String email;
+    private Comentario comentario;
     
     public UsuarioVO() { }
 
@@ -36,6 +39,14 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     
     public void setEmail(String email) { this.email = email; }
     
+    public Comentario getComentario() {
+        return (Comentario)this.comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = (Comentario)comentario;
+    }
+    
     @Override
     public int hashCode() {
     	
@@ -46,6 +57,7 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((biografia == null) ? 0 : biografia.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((comentario == null) ? 0 : comentario.hashCode());
         return result;
     }
     
@@ -93,6 +105,12 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
         }
         
         else if (!email.equals(other.email))
+            return false;
+        
+        if (comentario == null) {
+            if (other.comentario != null)
+                return false;
+        } else if (!comentario.equals(other.comentario))
             return false;
         
         return true;

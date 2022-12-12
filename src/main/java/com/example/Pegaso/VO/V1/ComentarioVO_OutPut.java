@@ -1,6 +1,7 @@
 package com.example.Pegaso.VO.V1;
 
 import com.example.Pegaso.Models.Dica;
+import com.example.Pegaso.Models.Usuário;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,4 +19,5 @@ public class ComentarioVO_OutPut {
 	String corpo;
     int curtidas = 0;
     Dica dica;
+    Usuário usuario;
 }

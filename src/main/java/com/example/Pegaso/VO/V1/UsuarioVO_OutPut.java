@@ -1,5 +1,7 @@
 package com.example.Pegaso.VO.V1;
 
+import com.example.Pegaso.Models.Comentario;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,4 +19,5 @@ public class UsuarioVO_OutPut {
 	String nome;
     String biografia;
     String email;
+    Comentario comentario;
 }

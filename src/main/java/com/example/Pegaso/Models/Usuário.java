@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -31,6 +36,10 @@ public class Usuário implements Serializable {
 
     @Column(nullable = false)
     private String email;
+    
+    @OneToMany()
+    @JoinColumn(name = "id_Comentario")
+    private Comentario comentario;
     
     public Long getIdUsuario() {
         return idUsuario;
@@ -62,6 +71,15 @@ public class Usuário implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    @JsonBackReference
+    public Comentario getComentario() {
+        return this.comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = (Comentario)comentario;
     }
 
 }

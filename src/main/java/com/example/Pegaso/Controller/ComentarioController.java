@@ -13,8 +13,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.Pegaso.Repository.DicaRepository;
+import com.example.Pegaso.Repository.PostagemRepository;
+import com.example.Pegaso.Repository.UsuarioRepository;
 import com.example.Pegaso.Service.ComentarioService;
+import com.example.Pegaso.Service.DicaService;
+import com.example.Pegaso.Service.PostagemService;
+import com.example.Pegaso.Service.UsuarioService;
 import com.example.Pegaso.VO.V1.ComentarioVO;
+import com.example.Pegaso.VO.V1.DicaVO;
+import com.example.Pegaso.exceptions.ResourceNotFoundException;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,8 +40,12 @@ public class ComentarioController {
 	
 	@Autowired
     private ComentarioService serviceComment;
-
-    @PostMapping(value = "/Adicionar", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@Autowired
+	private DicaRepository dicaRepository;
+	@Autowired
+	private UsuarioRepository userRepository;
+	
+	@PostMapping(value = "/Adicionar", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}, consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Adds a new Comment", description = "Adds a new Comment by passing in a JSON or XML representation of the comment", tags = {"Comment"}, responses = {
     @ApiResponse(description = "Success", responseCode = "200", content = { @Content(schema = @Schema(implementation = ComentarioVO.class))}),
     @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
@@ -43,6 +57,39 @@ public class ComentarioController {
     	return ResponseEntity.status(HttpStatus.CREATED).body(serviceComment.saveComment(comentario));
     }
 
+   
+    @GetMapping(value = "FindBy/{idDica}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Finds all Comments", description = "Finds all Comments",tags= {"Comment"},responses ={
+    @ApiResponse(description = "Success", responseCode = "200", content = {@Content(mediaType= "application/json", array = @ArraySchema(schema = @Schema(implementation = DicaVO.class)))}),
+        @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
+        @ApiResponse(description = "Unauthorized",  responseCode= "401", content =  @Content),
+        @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
+        @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
+    })
+    public ResponseEntity<List<ComentarioVO>>getCommentsByDica(@PathVariable(value = "idDica") Long idDica ) {
+        
+    	var entity =  dicaRepository.findById(idDica).orElseThrow(
+                () -> new ResourceNotFoundException("Searched comment with specified id not found")
+            );
+        return ResponseEntity.status(HttpStatus.OK).body(serviceComment.findByDicaContainin(entity));
+    }
+    
+    @GetMapping(value = "FindBy/{idUser}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Finds all Comments", description = "Finds all Comments",tags= {"Comment"},responses ={
+    @ApiResponse(description = "Success", responseCode = "200", content = {@Content(mediaType= "application/json", array = @ArraySchema(schema = @Schema(implementation = DicaVO.class)))}),
+        @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
+        @ApiResponse(description = "Unauthorized",  responseCode= "401", content =  @Content),
+        @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
+        @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
+    })
+    public ResponseEntity<List<ComentarioVO>>getCommentsByUser(@PathVariable(value = "idUsuario") Long idUsuario ) {
+        
+    	var entity =  userRepository.findById(idUsuario).orElseThrow(
+                () -> new ResourceNotFoundException("Searched comment with specified id not found")
+            );
+        return ResponseEntity.status(HttpStatus.OK).body(serviceComment.findByUserContainin(entity));
+    }
+    
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Finds all Comments", description = "Finds all Comments", tags = {"Comment"}, responses = {
     @ApiResponse(description = "Success", responseCode = "200", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ComentarioVO.class)))}),
