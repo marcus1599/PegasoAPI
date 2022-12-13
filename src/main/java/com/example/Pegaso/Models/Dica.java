@@ -1,8 +1,12 @@
 package com.example.Pegaso.Models;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,9 +38,8 @@ public class Dica implements Serializable{
     @Column
     private int curtidas;
 
-    @OneToMany()
-    @JoinColumn(name = "id_comentario")
-    private Comentario comentario;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "dica")
+    private List<Comentario> comentarios;
     
     @ManyToOne()
     @JoinColumn(name = "id_postagem")
@@ -83,13 +86,17 @@ public class Dica implements Serializable{
     public void setPostagem(Postagem postagem) {
         this.postagem = (Postagem)postagem;
     }
-    
+    public void addComentario(Comentario comentario){
+
+        setComentario(comentarios);
+        this.comentarios.add(comentario);
+    }
     @JsonBackReference
-    public Comentario getComentario() {
-        return this.comentario;
+    public List<Comentario> getComentario() {
+        return this.comentarios;
     }
 
-    public void setComentario(Comentario comentario) {
-        this.comentario = (Comentario)comentario;
+    public void setComentario(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 }

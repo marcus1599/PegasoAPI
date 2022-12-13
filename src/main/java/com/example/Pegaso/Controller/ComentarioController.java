@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Pegaso.Repository.DicaRepository;
-import com.example.Pegaso.Repository.PostagemRepository;
+
 import com.example.Pegaso.Repository.UsuarioRepository;
 import com.example.Pegaso.Service.ComentarioService;
-import com.example.Pegaso.Service.DicaService;
-import com.example.Pegaso.Service.PostagemService;
-import com.example.Pegaso.Service.UsuarioService;
+
 import com.example.Pegaso.VO.V1.ComentarioVO;
 import com.example.Pegaso.VO.V1.DicaVO;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;

@@ -32,7 +32,7 @@ public class ComentarioService {
 	 
 	 public List<ComentarioVO> findByUserContainin(Usuário usuario) {
          
-		 var comentario = repositoryComment.findByUserEquals(usuario);
+		 var comentario = repositoryComment.findByUsuarioEquals(usuario);
 		 var comentarioVO = DozerMapper.convertListofComentarioEntitityToVo(comentario);
          comentarioVO.stream().forEach(p-> p.add(linkTo(methodOn(ComentarioController.class).getOneComment(p.getKey())).withSelfRel()));
          return comentarioVO;

@@ -1,12 +1,16 @@
 package com.example.Pegaso.Models;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -37,9 +41,8 @@ public class Usuário implements Serializable {
     @Column(nullable = false)
     private String email;
     
-    @OneToMany()
-    @JoinColumn(name = "id_Comentario")
-    private Comentario comentario;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "usuario")
+    private List<Comentario> comentarios;
     
     public Long getIdUsuario() {
         return idUsuario;
@@ -51,6 +54,11 @@ public class Usuário implements Serializable {
 
     public String getNome() {
         return nome;
+    }
+    public void addComentario(Comentario comentario){
+
+        setComentario(comentarios);
+        this.comentarios.add(comentario);
     }
 
     public void setNome(String nome) {
@@ -74,12 +82,12 @@ public class Usuário implements Serializable {
     }
     
     @JsonBackReference
-    public Comentario getComentario() {
-        return this.comentario;
+    public List<Comentario> getComentario() {
+        return this.comentarios;
     }
 
-    public void setComentario(Comentario comentario) {
-        this.comentario = (Comentario)comentario;
+    public void setComentario(List<Comentario> comentario) {
+        this.comentarios = comentario;
     }
 
 }

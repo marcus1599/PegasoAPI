@@ -13,7 +13,7 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
 	
 	private static final long serialVersionUID = 1L;
 	
-    @JsonProperty("idComentario")
+    @JsonProperty("id_Comentario")
     @Mapping("idComentario")
     private Long key;
     private String corpo;

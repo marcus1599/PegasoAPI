@@ -38,10 +38,6 @@ public class DicaService {
                 entityPost.addDica(entity);
 
                 entity.setPostagem(entityPost);
-          
-               
-                
-                
                 //Salvando no banco de dados e adicionando em uma variável
                 var dica = repository.save(entity);
 

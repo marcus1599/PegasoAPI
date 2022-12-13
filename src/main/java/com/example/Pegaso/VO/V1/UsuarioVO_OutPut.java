@@ -1,5 +1,7 @@
 package com.example.Pegaso.VO.V1;
 
+import java.util.List;
+
 import com.example.Pegaso.Models.Comentario;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +21,5 @@ public class UsuarioVO_OutPut {
 	String nome;
     String biografia;
     String email;
-    Comentario comentario;
+    List<Comentario> comentario;
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Part;
@@ -35,6 +36,11 @@ public class ImagensController {
         return service.addPhoto(id, arquivo);
     }
 
+    @GetMapping("/findAll")
+    public ResponseEntity findAll(){
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.findTudo());
+    }
 
 
 

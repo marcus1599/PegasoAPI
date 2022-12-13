@@ -11,5 +11,5 @@ import com.example.Pegaso.Models.Usuário;
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 	
 	public List<Comentario> findByDicaEquals(Dica dica);
-	public List<Comentario> findByUserEquals(Usuário usuario);
+	public List<Comentario> findByUsuarioEquals(Usuário usuario);
 }

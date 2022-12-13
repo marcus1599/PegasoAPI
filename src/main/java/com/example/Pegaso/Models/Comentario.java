@@ -71,7 +71,7 @@ public class Comentario implements Serializable {
         this.dica = (Dica)dica;
     }
     
-    @JsonBackReference
+
     public Usuário getUsuário() {
         return this.usuario;
     }

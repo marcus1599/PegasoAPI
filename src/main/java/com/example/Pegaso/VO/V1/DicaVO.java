@@ -2,6 +2,7 @@ package com.example.Pegaso.VO.V1;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -25,7 +26,7 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
     private String title;
     private String   body;
     private int   curtidas =0;
-    private Comentario comentario;
+    private List<Comentario> comentario;
     private Postagem postagem;
     public DicaVO(){
         
@@ -60,12 +61,12 @@ public class DicaVO extends RepresentationModel<DicaVO>  implements Serializable
         this.body = body;
     }
 
-    public Comentario getComentario() {
-        return (Comentario)this.comentario;
+    public List<Comentario> getComentario() {
+        return this.comentario;
     }
 
-    public void setComentario(Comentario comentario) {
-        this.comentario = (Comentario)comentario;
+    public void setComentario(List<Comentario> comentario) {
+        this.comentario = comentario;
     }
     
     public Postagem getPostagem() {
