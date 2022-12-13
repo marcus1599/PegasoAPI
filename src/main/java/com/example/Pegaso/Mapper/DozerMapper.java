@@ -74,11 +74,11 @@ public class DozerMapper {
 
     public static DicaVO_OutPut convertDicaEntitityOutPut(Dica dica){
         DicaVO_OutPut vo = new DicaVO_OutPut();
-        vo.setIdDica(dica.getIdDica());
+        vo.setKey(dica.getIdDica());
         vo.setTitle(dica.getTitle());
         vo.setCurtidas(dica.getCurtidas());
-        vo.setComentario(dica.getComentario());
-        vo.setPostagem(dica.getPostagem());
+        vo.setQuantComentario(dica.getComentario().size());
+        vo.setIdPostagem(dica.getPostagem().getIdPostagem());
         return vo;
     }
     
@@ -103,6 +103,17 @@ public class DozerMapper {
         vo.setPostagem(post);
         return vo;
     }
+
+    public static ComentarioVO convertComentEntitityToVo(Comentario comentario){
+        ComentarioVO vo = new ComentarioVO();
+        Dica dica = comentario.getDica();
+        vo.setKey(comentario.getIdComentario());
+        vo.setCorpo(comentario.getCorpo());
+        vo.setUsuário(comentario.getUsuário());
+        vo.setDica(dica);
+        
+        return vo;
+    }
     public static List<DicaVO> convertListofDicaEntitityToVo(List<Dica> origin){
         List<DicaVO> vo = new ArrayList();
 
@@ -114,6 +125,23 @@ public class DozerMapper {
             dicaAux.setTitle(dica.getTitle());
             dicaAux.setPostagem(dica.getPostagem());
             dicaAux.setBody(dica.getBody());
+            vo.add(dicaAux);
+      
+        }
+
+        return vo;
+    }
+    public static List<DicaVO_OutPut> convertListofDicaOutPutEntitityToVo(List<Dica> origin){
+        List<DicaVO_OutPut> vo = new ArrayList();
+
+
+        for( Dica dica : origin){
+            DicaVO_OutPut dicaAux = new DicaVO_OutPut();
+            dicaAux.setKey(dica.getIdDica());
+            dicaAux.setCurtidas(dica.getCurtidas());
+            dicaAux.setTitle(dica.getTitle());
+            dicaAux.setIdPostagem(dica.getPostagem().getIdPostagem());
+            dicaAux.setQuantComentario(dica.getComentario().size());
             vo.add(dicaAux);
       
         }

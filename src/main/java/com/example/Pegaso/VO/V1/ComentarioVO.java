@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"idComentario", "corpo", "curtidas", "dica", "user"})
+@JsonPropertyOrder({"id_Comentario", "corpo", "curtidas", "dica", "user"})
 public class ComentarioVO extends RepresentationModel<ComentarioVO> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

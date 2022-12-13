@@ -42,7 +42,7 @@ public class ComentarioService {
 		
 		var entity = DozerMapper.parseObject(comentarioVO, Comentario.class);
     	var comentario = repositoryComment.save(entity);
-    	var vo = DozerMapper.parseObject(comentario, ComentarioVO.class);
+    	var vo = DozerMapper.convertComentEntitityToVo(comentario);
         vo.add(linkTo(methodOn(ComentarioController.class).getOneComment(vo.getKey())).withSelfRel());
         return vo;
 	}
@@ -50,7 +50,7 @@ public class ComentarioService {
 	public List<ComentarioVO> findAllComment() {
 		
 		var comment = repositoryComment.findAll();
-        var comentarioVO = DozerMapper.parseListObjects(comment, ComentarioVO.class);
+        var comentarioVO = DozerMapper.convertListofComentarioEntitityToVo(comment);
         comentarioVO.stream().forEach(p-> p.add(linkTo(methodOn(ComentarioController.class).getOneComment(p.getKey())).withSelfRel()));
         return comentarioVO;
 	}

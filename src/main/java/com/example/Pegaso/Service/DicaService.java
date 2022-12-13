@@ -59,14 +59,14 @@ public class DicaService {
             return dicaVO;
         }
       
-        public List<DicaVO> findByPostagemContainin(Postagem postagem)
+        public List<DicaVO_OutPut> findByPostagemContainin(Postagem postagem)
         {
             var dica = repository.findByPostagemEquals(postagem);
-            var dicaVO = DozerMapper.convertListofDicaEntitityToVo(dica);
+            var dicaVO = DozerMapper.convertListofDicaOutPutEntitityToVo(dica);
 
             dicaVO.stream()
             .forEach(p-> p.add(linkTo(methodOn(DicaController.class)
-            .getOneDica(p.getKey())).withSelfRel()));
+            .getOneDica(p.getKey())).withRel("Informações")));
 
             return dicaVO;
         }

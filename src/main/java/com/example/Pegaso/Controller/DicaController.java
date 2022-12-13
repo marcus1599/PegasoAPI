@@ -23,6 +23,7 @@ import com.example.Pegaso.Repository.PostagemRepository;
 import com.example.Pegaso.Service.DicaService;
 import com.example.Pegaso.Service.PostagemService;
 import com.example.Pegaso.VO.V1.DicaVO;
+import com.example.Pegaso.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.VO.V1.PostagemVO;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;
 
@@ -103,7 +104,7 @@ public class DicaController {
         @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
         @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
     })
-    public ResponseEntity<List<DicaVO>>getDicasByPostagem(@PathVariable(value = "idPostagem") Long idPostagem ){
+    public ResponseEntity<List<DicaVO_OutPut>>getDicasByPostagem(@PathVariable(value = "idPostagem") Long idPostagem ){
         
         var entity =  postRepository.findById(idPostagem).orElseThrow(
                 () -> new ResourceNotFoundException("Searched post with specified id not found")

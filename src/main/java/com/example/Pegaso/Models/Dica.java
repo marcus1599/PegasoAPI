@@ -91,12 +91,13 @@ public class Dica implements Serializable{
         setComentario(comentarios);
         this.comentarios.add(comentario);
     }
-    @JsonBackReference
+  
     public List<Comentario> getComentario() {
         return this.comentarios;
     }
 
     public void setComentario(List<Comentario> comentarios) {
         this.comentarios = comentarios;
+        
     }
 }
