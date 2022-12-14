@@ -3,12 +3,12 @@ package com.example.Pegaso.VO.V1;
 import java.io.Serializable;
 import org.springframework.hateoas.RepresentationModel;
 import com.example.Pegaso.Models.Dica;
-import com.example.Pegaso.Models.Usuário;
+import com.example.Pegaso.Models.Usuario;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"id_Comentario", "corpo", "curtidas", "dica", "user"})
+@JsonPropertyOrder({"id_Comentario", "corpo", "curtidas", "dica", "usuario"})
 public class ComentarioVO extends RepresentationModel<ComentarioVO> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,7 +19,7 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
     private String corpo;
     private int curtidas = 0;
     private Dica dica;
-    private Usuário usuario;
+    private Usuario usuario;
     
     public ComentarioVO() { }
 
@@ -39,9 +39,9 @@ public class ComentarioVO extends RepresentationModel<ComentarioVO> implements S
 
     public void setDica(Dica dica) { this.dica = (Dica)dica; }
     
-    public Usuário getUsuário() { return (Usuário)this.usuario; }
+    public Usuario getUsuario() { return (Usuario)this.usuario; }
 
-    public void setUsuário(Usuário usuario) { this.usuario = (Usuário)usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = (Usuario)usuario; }
     
     @Override
     public int hashCode() {

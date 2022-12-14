@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -36,7 +39,8 @@ public class Comentario implements Serializable {
     
     @ManyToOne()
     @JoinColumn(name = "id_usuario")
-    private Usuário usuario;
+   
+    private Usuario usuario;
 
     public Long getIdComentario() {
         return idComentario;
@@ -62,7 +66,7 @@ public class Comentario implements Serializable {
         this.curtidas = curtidas;
     }
 
-    @JsonBackReference
+    @JsonBackReference()
     public Dica getDica() {
         return (Dica)this.dica;
     }
@@ -71,12 +75,12 @@ public class Comentario implements Serializable {
         this.dica = (Dica)dica;
     }
     
-
-    public Usuário getUsuário() {
+    @JsonManagedReference
+    public Usuario getUsuario() {
         return this.usuario;
     }
 
-    public void setUsuário(Usuário usuario) {
-        this.usuario = (Usuário)usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = (Usuario)usuario;
     }
 }

@@ -7,7 +7,7 @@ import com.example.Pegaso.exceptions.ResourceNotFoundException;
 import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Dica;
-import com.example.Pegaso.Models.Usuário;
+import com.example.Pegaso.Models.Usuario;
 import com.example.Pegaso.Repository.ComentarioRepository;
 import com.example.Pegaso.Repository.DicaRepository;
 import com.example.Pegaso.VO.V1.ComentarioVO;
@@ -30,7 +30,7 @@ public class ComentarioService {
          return comentarioVO;
      }
 	 
-	 public List<ComentarioVO> findByUserContainin(Usuário usuario) {
+	 public List<ComentarioVO> findByUserContainin(Usuario usuario) {
          
 		 var comentario = repositoryComment.findByUsuarioEquals(usuario);
 		 var comentarioVO = DozerMapper.convertListofComentarioEntitityToVo(comentario);

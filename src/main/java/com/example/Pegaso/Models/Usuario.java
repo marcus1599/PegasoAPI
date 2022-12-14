@@ -12,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-public class Usuário implements Serializable {
+@Table(name="Usuario")
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +45,7 @@ public class Usuário implements Serializable {
     private String email;
     
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "usuario")
+    
     private List<Comentario> comentarios;
     
     public Long getIdUsuario() {
@@ -55,6 +59,7 @@ public class Usuário implements Serializable {
     public String getNome() {
         return nome;
     }
+    
     public void addComentario(Comentario comentario){
 
         setComentario(comentarios);

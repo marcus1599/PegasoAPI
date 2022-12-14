@@ -13,7 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -92,6 +98,7 @@ public class Dica implements Serializable{
         this.comentarios.add(comentario);
     }
   
+    @JsonManagedReference
     public List<Comentario> getComentario() {
         return this.comentarios;
     }

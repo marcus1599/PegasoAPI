@@ -56,7 +56,7 @@ public class ComentarioController {
     }
 
    
-    @GetMapping(value = "FindBy/{idDica}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "FindByDica/{idDica}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Finds all Comments", description = "Finds all Comments",tags= {"Comment"},responses ={
     @ApiResponse(description = "Success", responseCode = "200", content = {@Content(mediaType= "application/json", array = @ArraySchema(schema = @Schema(implementation = DicaVO.class)))}),
         @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -72,7 +72,7 @@ public class ComentarioController {
         return ResponseEntity.status(HttpStatus.OK).body(serviceComment.findByDicaContainin(entity));
     }
     
-    @GetMapping(value = "FindBy/{idUser}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "FindByUser/{idUser}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Finds all Comments", description = "Finds all Comments",tags= {"Comment"},responses ={
     @ApiResponse(description = "Success", responseCode = "200", content = {@Content(mediaType= "application/json", array = @ArraySchema(schema = @Schema(implementation = DicaVO.class)))}),
         @ApiResponse(description = "BadRequest",    responseCode= "400", content =  @Content),
@@ -80,7 +80,7 @@ public class ComentarioController {
         @ApiResponse(description = "Not Found",     responseCode= "404", content =  @Content),
         @ApiResponse(description = "InternalError", responseCode= "500", content =  @Content),
     })
-    public ResponseEntity<List<ComentarioVO>>getCommentsByUser(@PathVariable(value = "idUsuario") Long idUsuario ) {
+    public ResponseEntity<List<ComentarioVO>>getCommentsByUser(@PathVariable(value = "idUser") Long idUsuario ) {
         
     	var entity =  userRepository.findById(idUsuario).orElseThrow(
                 () -> new ResourceNotFoundException("Searched comment with specified id not found")

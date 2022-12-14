@@ -6,11 +6,12 @@ import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.Models.Comentario;
-import com.example.Pegaso.Models.Usuário;
+import com.example.Pegaso.Models.Usuario;
 import com.example.Pegaso.VO.V1.ComentarioVO;
 import com.example.Pegaso.VO.V1.ComentarioVO_OutPut;
 import com.example.Pegaso.VO.V1.DicaVO;
 import com.example.Pegaso.VO.V1.PostagemVO_OutPut;
+import com.example.Pegaso.VO.V1.UsuarioVO;
 import com.example.Pegaso.VO.V1.UsuarioVO_OutPut;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
@@ -56,7 +57,7 @@ public class DozerMapper {
     	vo.setCorpo(comentario.getCorpo());
     	vo.setCurtidas(comentario.getCurtidas());
     	vo.setDica(comentario.getDica());
-    	vo.setUsuario(comentario.getUsuário());
+    	vo.setUsuario(comentario.getUsuario());
     	return vo;
     }
     
@@ -82,7 +83,7 @@ public class DozerMapper {
         return vo;
     }
     
-  public static UsuarioVO_OutPut convertUserEntitityOutPut(Usuário usuário) {
+  public static UsuarioVO_OutPut convertUserEntitityOutPut(Usuario usuário) {
     	
     	UsuarioVO_OutPut vo = new UsuarioVO_OutPut();
     	vo.setIdUsuario(usuário.getIdUsuario());
@@ -103,13 +104,24 @@ public class DozerMapper {
         vo.setPostagem(post);
         return vo;
     }
+    public static UsuarioVO convertUserEntitityToVo(Usuario user){
+        UsuarioVO vo = new UsuarioVO();
+      
+        vo.setKey(user.getIdUsuario());
+        vo.setNome(user.getNome());
+        vo.setBiografia(user.getBiografia());
+        vo.setEmail(user.getEmail());
+        vo.setComentario(user.getComentario());
+        return vo;
+    }
 
     public static ComentarioVO convertComentEntitityToVo(Comentario comentario){
         ComentarioVO vo = new ComentarioVO();
         Dica dica = comentario.getDica();
+        Usuario user = comentario.getUsuario();
         vo.setKey(comentario.getIdComentario());
         vo.setCorpo(comentario.getCorpo());
-        vo.setUsuário(comentario.getUsuário());
+        vo.setUsuario(user);
         vo.setDica(dica);
         
         return vo;
@@ -124,6 +136,7 @@ public class DozerMapper {
             dicaAux.setCurtidas(dica.getCurtidas());
             dicaAux.setTitle(dica.getTitle());
             dicaAux.setPostagem(dica.getPostagem());
+            dicaAux.setComentario(dica.getComentario());
             dicaAux.setBody(dica.getBody());
             vo.add(dicaAux);
       
@@ -158,8 +171,23 @@ public class DozerMapper {
             comentarioAux.setCurtidas(comentario.getCurtidas());
             comentarioAux.setCorpo(comentario.getCorpo());
             comentarioAux.setDica(comentario.getDica());
-            comentarioAux.setUsuário(comentario.getUsuário());
+            comentarioAux.setUsuario(comentario.getUsuario());
             vo.add(comentarioAux);
+        }
+
+        return vo;
+    }
+    public static List<UsuarioVO> convertListofUserEntitityToVo(List<Usuario> origin){
+        List<UsuarioVO> vo = new ArrayList();
+
+        for(Usuario usuario : origin){
+            UsuarioVO usuarioAux = new UsuarioVO();
+            usuarioAux.setKey(usuario.getIdUsuario());
+            usuarioAux.setBiografia(usuario.getBiografia());
+            usuarioAux.setNome(usuario.getNome());
+            usuarioAux.setComentario(usuario.getComentario());
+            usuarioAux.setEmail(usuario.getEmail());
+            vo.add(usuarioAux);
         }
 
         return vo;

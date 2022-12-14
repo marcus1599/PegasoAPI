@@ -5,11 +5,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Dica;
-import com.example.Pegaso.Models.Usuário;
+import com.example.Pegaso.Models.Usuario;
 
 @Repository
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 	
 	public List<Comentario> findByDicaEquals(Dica dica);
-	public List<Comentario> findByUsuarioEquals(Usuário usuario);
+	public List<Comentario> findByUsuarioEquals(Usuario usuario);
 }

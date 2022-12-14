@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.Pegaso.Controller.UsuarioController;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;
 import com.example.Pegaso.Mapper.DozerMapper;
-import com.example.Pegaso.Models.Usuário;
+import com.example.Pegaso.Models.Usuario;
 import com.example.Pegaso.Repository.UsuarioRepository;
 import com.example.Pegaso.VO.V1.UsuarioVO;
 import com.example.Pegaso.VO.V1.UsuarioVO_OutPut;
@@ -21,9 +21,9 @@ public class UsuarioService {
 	
 	public UsuarioVO saveUser(UsuarioVO usuarioVO) {
 		
-		var entity = DozerMapper.parseObject(usuarioVO, Usuário.class);
+		var entity = DozerMapper.parseObject(usuarioVO, Usuario.class);
     	var usuario = repositoryUser.save(entity);
-    	var vo = DozerMapper.parseObject(usuario, UsuarioVO.class);
+    	var vo = DozerMapper.convertUserEntitityToVo(usuario);
         vo.add(linkTo(methodOn(UsuarioController.class).getOneUser(vo.getKey())).withSelfRel());
         return vo;
 	}
@@ -31,7 +31,7 @@ public class UsuarioService {
 	public List<UsuarioVO> findAllUser() {
 		
 		var user = repositoryUser.findAll();
-        var usuarioVO = DozerMapper.parseListObjects(user, UsuarioVO.class);
+        var usuarioVO = DozerMapper.convertListofUserEntitityToVo(user);
         usuarioVO.stream().forEach(p-> p.add(linkTo(methodOn(UsuarioController.class).getOneUser(p.getKey())).withSelfRel()));
         return usuarioVO;
 	}

@@ -1,6 +1,8 @@
 package com.example.Pegaso.VO.V1;
 
 import java.io.Serializable;
+import java.util.List;
+
 import org.springframework.hateoas.RepresentationModel;
 
 import com.example.Pegaso.Models.Comentario;
@@ -8,18 +10,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"idUsuario", "nome", "biografia", "email", "comentario"})
+@JsonPropertyOrder({"id_usuario", "nome", "biografia", "email", "comentario"})
 public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-    @JsonProperty("idUsuario")
+    @JsonProperty("id_usuario")
     @Mapping("idUsuario")
     private Long key;
     private String nome;
     private String biografia;
     private String email;
-    private Comentario comentario;
+    private List<Comentario> comentario;
     
     public UsuarioVO() { }
 
@@ -39,12 +41,12 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     
     public void setEmail(String email) { this.email = email; }
     
-    public Comentario getComentario() {
-        return (Comentario)this.comentario;
+    public List<Comentario> getComentario() {
+        return this.comentario;
     }
 
-    public void setComentario(Comentario comentario) {
-        this.comentario = (Comentario)comentario;
+    public void setComentario(List<Comentario> list) {
+        this.comentario = list;
     }
     
     @Override
