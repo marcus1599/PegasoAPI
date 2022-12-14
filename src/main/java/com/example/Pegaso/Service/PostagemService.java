@@ -34,7 +34,7 @@ public class PostagemService {
                 var postagem = repository.save(entity);
 
                 //Convertendo para Vo para exibir para usuário
-                var vo = DozerMapper.parseObject(postagem, PostagemVO.class);
+                var vo = DozerMapper.convertPostagemEntitityToVo(postagem);
                 vo.add(linkTo(methodOn(PostagemController.class).getOnePost(vo.getKey())).withSelfRel());
                 return vo;
         }
@@ -42,7 +42,7 @@ public class PostagemService {
     public List<PostagemVO> findAllPost()
         {
             var post = repository.findAll();
-            var postagemVO = DozerMapper.parseListObjects(post, PostagemVO.class);
+            var postagemVO = DozerMapper.convertListofPostagemEntitityToVo(post);
 
             postagemVO.stream()
             .forEach(p-> p.add(linkTo(methodOn(PostagemController.class)

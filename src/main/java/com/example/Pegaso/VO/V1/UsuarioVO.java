@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.example.Pegaso.Models.Comentario;
+import com.example.Pegaso.Models.Postagem;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
@@ -21,6 +22,7 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     private String nome;
     private String biografia;
     private String email;
+    private List<Postagem> postagens;
     private List<Comentario> comentario;
     
     public UsuarioVO() { }
@@ -40,6 +42,14 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     public String getEmail() { return email; }
     
     public void setEmail(String email) { this.email = email; }
+
+    public void setPostagem(List<Postagem> postagens) {
+        this.postagens = postagens;
+    }
+    
+    public List<Postagem> getPostagens() {
+        return this.postagens;
+    }
     
     public List<Comentario> getComentario() {
         return this.comentario;
@@ -117,5 +127,6 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
         
         return true;
     }
+
     
 }

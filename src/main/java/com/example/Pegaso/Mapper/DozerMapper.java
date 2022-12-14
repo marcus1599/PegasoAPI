@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Postagem;
 import com.example.Pegaso.VO.V1.DicaVO_OutPut;
+import com.example.Pegaso.VO.V1.PostagemVO;
 import com.example.Pegaso.Models.Comentario;
 import com.example.Pegaso.Models.Usuario;
 import com.example.Pegaso.VO.V1.ComentarioVO;
@@ -112,6 +113,7 @@ public class DozerMapper {
         vo.setBiografia(user.getBiografia());
         vo.setEmail(user.getEmail());
         vo.setComentario(user.getComentario());
+        vo.setPostagem(user.getPostagems());
         return vo;
     }
 
@@ -123,6 +125,20 @@ public class DozerMapper {
         vo.setCorpo(comentario.getCorpo());
         vo.setUsuario(user);
         vo.setDica(dica);
+        
+        return vo;
+    }
+    public static PostagemVO convertPostagemEntitityToVo(Postagem postagem){
+        PostagemVO vo = new PostagemVO();
+        
+        vo.setKey(postagem.getIdPostagem());
+        vo.setNome(postagem.getNome());
+        vo.setDescricao(postagem.getDescricao());
+        vo.setDicas(postagem.getDicas());
+        vo.setImagems(postagem.getImagems());
+        vo.setVideos(postagem.getVideos());
+        vo.setUsuario(postagem.getUsuario());
+      
         
         return vo;
     }
@@ -187,7 +203,25 @@ public class DozerMapper {
             usuarioAux.setNome(usuario.getNome());
             usuarioAux.setComentario(usuario.getComentario());
             usuarioAux.setEmail(usuario.getEmail());
+            usuarioAux.setPostagem(usuario.getPostagems());
             vo.add(usuarioAux);
+        }
+
+        return vo;
+    }
+
+    public static List<PostagemVO> convertListofPostagemEntitityToVo(List<Postagem> origin){
+        List<PostagemVO> vo = new ArrayList();
+
+        for(Postagem postagem : origin){
+            PostagemVO postagemAux = new PostagemVO();
+            postagemAux.setKey(postagem.getIdPostagem());
+            postagemAux.setDescricao(postagem.getDescricao());
+            postagemAux.setDicas(postagem.getDicas());
+            postagemAux.setImagems(postagem.getImagems());
+            postagemAux.setNome(postagem.getNome());
+            postagemAux.setUsuario(postagem.getUsuario());
+            vo.add(postagemAux);
         }
 
         return vo;

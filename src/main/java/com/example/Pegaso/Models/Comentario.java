@@ -39,7 +39,6 @@ public class Comentario implements Serializable {
     
     @ManyToOne()
     @JoinColumn(name = "id_usuario")
-   
     private Usuario usuario;
 
     public Long getIdComentario() {
@@ -75,7 +74,7 @@ public class Comentario implements Serializable {
         this.dica = (Dica)dica;
     }
     
-    @JsonManagedReference
+    
     public Usuario getUsuario() {
         return this.usuario;
     }

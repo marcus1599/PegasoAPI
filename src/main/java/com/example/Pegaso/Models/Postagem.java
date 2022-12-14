@@ -11,7 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
@@ -22,7 +26,7 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "usuario")
 @Entity
 public class Postagem  implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -40,6 +44,19 @@ public class Postagem  implements Serializable{
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "postagem")
     private List<Dica> dicas = new ArrayList<>();
 
+
+    @ManyToOne()
+    @JoinColumn(name = "id_usuario")
+   
+    private Usuario usuario;
+    @JsonBackReference
+
+    public Usuario getUsuario() {
+        return (Usuario)usuario;
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = (Usuario)usuario;
+    }
     @Column (nullable = true)
     private ArrayList<Imagem> imagems;
 

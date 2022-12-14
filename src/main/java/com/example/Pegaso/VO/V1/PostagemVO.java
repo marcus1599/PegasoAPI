@@ -10,6 +10,7 @@ import org.springframework.hateoas.RepresentationModel;
 import com.example.Pegaso.Mapper.DozerMapper;
 import com.example.Pegaso.Models.Dica;
 import com.example.Pegaso.Models.Imagem;
+import com.example.Pegaso.Models.Usuario;
 import com.example.Pegaso.Models.Video;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -29,6 +30,15 @@ public class PostagemVO extends RepresentationModel<PostagemVO>  implements Seri
     private String   nome;
     private String   descricao;
     private List<Dica> dicas;
+    private Usuario usuario;
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     private ArrayList<Imagem> imagems;
     private ArrayList<Video>videos;
     
