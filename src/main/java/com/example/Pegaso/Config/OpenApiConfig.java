@@ -11,13 +11,13 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(new Info()
-        .title("RESTful API with Java and Spring Boot")
-        .version("v1")
-        .description("API Pegaso")
-        .termsOfService("https://pegaso/terms")
-        .license(new License()
-        .name("Apache 2.0")
-        .url("https://pegaso/license")));
-    
+                .title("RESTfull API with Java and Spring Boot")
+                .version("v1")
+                .description("API Pegaso")
+                .termsOfService("https://pegaso/terms")
+                .license(new License()
+                        .name("Apache 2.0")
+                        .url("https://pegaso/license")));
+
     }
 }
