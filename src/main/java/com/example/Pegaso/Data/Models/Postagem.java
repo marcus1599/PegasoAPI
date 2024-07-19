@@ -14,9 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -38,16 +37,16 @@ public class Postagem implements Serializable {
     @Column(nullable = true)
     private String descricao;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "postagem")
     private List<Dica> dicas = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "id_usuario")
-
     private Usuario usuario;
 
-    @JsonBackReference
-
+    
     public Usuario getUsuario() {
         return (Usuario) usuario;
     }
@@ -56,8 +55,10 @@ public class Postagem implements Serializable {
         this.usuario = (Usuario) usuario;
     }
 
+    @JsonIgnore
     @Column(nullable = true)
     private ArrayList<Imagem> imagems;
+
 
     @Column(nullable = true)
     private ArrayList<Video> videos;
@@ -68,7 +69,7 @@ public class Postagem implements Serializable {
         this.dicas.add(dica);
     }
 
-    @JsonManagedReference
+ 
     public List<Dica> getDicas() {
 
         return this.dicas;

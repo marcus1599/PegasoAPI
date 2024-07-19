@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -31,10 +31,12 @@ public class Comentario implements Serializable {
     @Column
     private int curtidas;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "id_Dica")
     private Dica dica;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
@@ -63,7 +65,6 @@ public class Comentario implements Serializable {
         this.curtidas = curtidas;
     }
 
-    @JsonBackReference()
     public Dica getDica() {
         return (Dica) this.dica;
     }

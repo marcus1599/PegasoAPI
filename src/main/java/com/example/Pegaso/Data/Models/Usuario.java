@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -47,6 +46,7 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Comentario> comentarios;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Postagem> postagens;
 
@@ -97,7 +97,8 @@ public class Usuario implements Serializable {
         this.comentarios = comentario;
     }
 
-    @JsonManagedReference
+    
+    @JsonIgnore
     public List<Postagem> getPostagems() {
         return this.postagens;
     }

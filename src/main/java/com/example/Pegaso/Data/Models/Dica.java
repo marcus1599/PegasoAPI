@@ -14,8 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -41,9 +41,12 @@ public class Dica implements Serializable {
     @Column
     private int curtidas;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "dica")
     private List<Comentario> comentarios;
 
+
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "id_postagem")
     private Postagem postagem;
@@ -80,7 +83,6 @@ public class Dica implements Serializable {
         this.curtidas = curtidas;
     }
 
-    @JsonBackReference
     public Postagem getPostagem() {
         return this.postagem;
     }
@@ -95,7 +97,7 @@ public class Dica implements Serializable {
         this.comentarios.add(comentario);
     }
 
-    @JsonManagedReference
+   @JsonIgnore
     public List<Comentario> getComentario() {
         return this.comentarios;
     }

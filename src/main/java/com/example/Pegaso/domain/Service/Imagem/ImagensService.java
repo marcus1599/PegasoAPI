@@ -39,6 +39,7 @@ public class ImagensService {
         imagem.setDescricao(dto.getDescricao());
         imagem.setEndereco(dto.getEndereco());
         imagem.setCurtidas(dto.getCurtidas());
+        imagem.setFigure(dto.getFigure());
         imagem.setPostagem(postagem);
 
         return repositiry.save(imagem);

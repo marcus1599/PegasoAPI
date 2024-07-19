@@ -2,6 +2,8 @@ package com.example.Pegaso.Data.Models;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +16,7 @@ public class Imagem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id_Imagem;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_postagem")
     Postagem postagem;
