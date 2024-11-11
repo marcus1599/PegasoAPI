@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({ "id_usuario", "nome", "biografia", "email", "comentario" })
+@JsonPropertyOrder({ "id_usuario", "username", "biografia", "email", "comentario" })
 public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,9 +19,10 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     @JsonProperty("id_usuario")
     @Mapping("idUsuario")
     private Long key;
-    private String nome;
+    private String username;
     private String biografia;
     private String email;
+    private String senha;
     private List<Postagem> postagens;
     private List<Comentario> comentario;
 
@@ -36,12 +37,18 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
         this.key = key;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsername() {
+        return username;
+    }
+    public String getSenha(){
+        return senha;
+    }
+    public void setSenha(String senha){
+        this.senha = senha;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getBiografia() {
@@ -83,7 +90,7 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
         int result = 1;
 
         result = prime * result + ((key == null) ? 0 : key.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
         result = prime * result + ((biografia == null) ? 0 : biografia.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((comentario == null) ? 0 : comentario.hashCode());
@@ -112,12 +119,12 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
         else if (!key.equals(other.key))
             return false;
 
-        if (nome == null) {
-            if (other.nome != null)
+        if (username == null) {
+            if (other.username != null)
                 return false;
         }
 
-        else if (!nome.equals(other.nome))
+        else if (!username.equals(other.username))
             return false;
 
         if (biografia == null) {

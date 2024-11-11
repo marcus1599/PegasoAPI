@@ -15,9 +15,10 @@ public class UsuarioBuilder {
     public UsuarioVO convertToVO(Usuario user) {
         UsuarioVO vo = new UsuarioVO();
         vo.setKey(user.getIdUsuario());
-        vo.setNome(user.getUserName());
+        vo.setUsername(user.getUserName());
         vo.setBiografia(user.getBiografia());
         vo.setEmail(user.getEmail());
+        vo.setSenha(user.getSenha());
         vo.setComentario(user.getComentario());
         vo.setPostagem(user.getPostagems());
         return vo;
@@ -30,7 +31,7 @@ public class UsuarioBuilder {
         vo.setBiografia(usuario.getBiografia());
         vo.setEmail(usuario.getEmail());
         vo.setComentario(usuario.getComentario());
-        // A senha não é incluída no VO por segurança
+    
         return vo;
     }
 

@@ -15,6 +15,8 @@ public interface UsuarioService {
 
     UsuarioVO_OutPut findByIdUserCostomized(Long id) throws Exception;
 
+
+
     UsuarioVO updateUser(UsuarioVO usuarioVO, Long id) throws Exception;
 
     void deleteUser(Long id) throws Exception;

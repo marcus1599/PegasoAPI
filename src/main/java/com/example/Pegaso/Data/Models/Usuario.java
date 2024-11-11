@@ -51,7 +51,7 @@ public class Usuario implements Serializable {
     private List<Postagem> postagens;
 
     @Column(nullable = false)
-    @JsonIgnore // Ignora o campo senha nas respostas JSON por segurança
+    @JsonIgnore 
     private String senha;
 
 

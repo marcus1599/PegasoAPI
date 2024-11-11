@@ -3,6 +3,8 @@ package com.example.Pegaso.domain.Service.auth;
 import com.example.Pegaso.Data.Models.Usuario;
 import com.example.Pegaso.Data.Repository.UsuarioRepository;
 import com.example.Pegaso.Security.JwtTokenProvider;
+import com.example.Pegaso.domain.VO.V1.UsuarioVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,20 +32,20 @@ public class AuthenticationService {
         
         return Optional.empty();
     }
-    public void register(String nome, String email, String senha) throws Exception {
+    public void register(UsuarioVO usuarioVO) throws Exception {
         // Verifique se o e-mail já está registrado
-        if (usuarioRepository.findByEmail(email).isPresent()) {
+        if (usuarioRepository.findByEmail(usuarioVO.getEmail()).isPresent()) {
             throw new Exception("E-mail já registrado");
         }
 
         // Criptografe a senha
-        String senhaCriptografada = passwordEncoder.encode(senha);
+        String senhaCriptografada = passwordEncoder.encode(usuarioVO.getSenha());
 
-        // Crie o objeto de usuário e salve no banco de dados
+        // Cria o objeto de usuário e salve no banco de dados
         Usuario usuario = new Usuario();
-        usuario.setUserName(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senhaCriptografada); // Lembre-se de adicionar o campo de senha no model de `Usuario`
+        usuario.setUserName(usuarioVO.getUsername());
+        usuario.setEmail(usuarioVO.getEmail());
+        usuario.setSenha(senhaCriptografada); 
 
         usuarioRepository.save(usuario);
     }

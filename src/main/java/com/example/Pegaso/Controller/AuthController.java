@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Pegaso.domain.Service.auth.AuthenticationService;
+import com.example.Pegaso.domain.VO.V1.UsuarioVO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +19,12 @@ public class AuthController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String senha) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String senha = loginData.get("senha");
+    
         Optional<String> token = authenticationService.login(email, senha);
-
+    
         if (token.isPresent()) {
             Map<String, String> response = new HashMap<>();
             response.put("token", token.get());
@@ -29,11 +33,12 @@ public class AuthController {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
     }
+    
     @PostMapping("/register")
-public ResponseEntity<?> register(@RequestParam String nome, @RequestParam String email, @RequestParam String senha) {
+public ResponseEntity<?> register(@RequestBody UsuarioVO usuarioVO) {
     try {
-        authenticationService.register(nome, email, senha);
-        return ResponseEntity.ok("Usuário registrado com sucesso!");
+        authenticationService.register(usuarioVO);
+        return ResponseEntity.ok().body(Map.of("message", "Usuário registrado com sucesso!"));
     } catch (Exception e) {
         return ResponseEntity.status(400).body("Erro no registro: " + e.getMessage());
     }
