@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS public.usuario
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.usuario
-    OWNER to postgres;
+    OWNER to pegaso_postgresql_user;

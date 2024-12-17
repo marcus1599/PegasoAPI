@@ -16,4 +16,4 @@ CREATE TABLE IF NOT EXISTS public.dica
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.dica
-    OWNER to postgres;
+    OWNER to pegaso_postgresql_user;

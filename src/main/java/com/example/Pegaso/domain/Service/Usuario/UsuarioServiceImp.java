@@ -3,6 +3,8 @@ package com.example.Pegaso.domain.Service.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.Pegaso.Controller.UsuarioController;
 import com.example.Pegaso.Data.Models.Usuario;
 import com.example.Pegaso.Data.Repository.UsuarioRepository;
@@ -12,12 +14,15 @@ import lombok.AllArgsConstructor;
 
 import com.example.Pegaso.domain.Builder.DozerMapper;
 import com.example.Pegaso.domain.Builder.Usuario.UsuarioBuilder;
+import com.example.Pegaso.domain.Service.File.FileStorageService;
 import com.example.Pegaso.domain.VO.V1.UsuarioVO;
 import com.example.Pegaso.domain.VO.V1.UsuarioVO_OutPut;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
+import java.util.Optional;
 
 @Primary
 @Service
@@ -92,6 +97,27 @@ public class UsuarioServiceImp implements UsuarioService {
 
 		repositoryUser.deleteById(id);
 	}
+
+	@Autowired
+	private FileStorageService fileStorageService;
+
+	public Usuario atualizarAvatar(Long userId, MultipartFile avatarFile) throws Exception {
+        // Busca o usuário no banco de dados
+        Optional<Usuario> usuarioOpt = repositoryUser.findById(userId);
+
+        if (usuarioOpt.isEmpty()) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        Usuario usuario = usuarioOpt.get();
+
+        // Salva o avatar no disco
+        String avatarPath = fileStorageService.storeFile(avatarFile);
+
+        // Atualiza o avatar do usuário
+        usuario.setAvatar(avatarPath);
+        return repositoryUser.save(usuario);
+    }
 
 
 

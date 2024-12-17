@@ -40,6 +40,9 @@ public class Usuario implements Serializable {
     @Column(nullable = true)
     private String biografia;
 
+    @Column(length = 255)
+    private String avatar;
+
     @Column(nullable = false)
     private String email;
 
@@ -83,6 +86,13 @@ public class Usuario implements Serializable {
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
+    }
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getEmail() {

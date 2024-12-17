@@ -19,4 +19,4 @@ CREATE TABLE IF NOT EXISTS public.comentario
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.comentario
-    OWNER to postgres;
+    OWNER to pegaso_postgresql_user;
