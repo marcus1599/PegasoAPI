@@ -15,22 +15,22 @@ public class UsuarioBuilder {
     public UsuarioVO convertToVO(Usuario user) {
         UsuarioVO vo = new UsuarioVO();
         vo.setKey(user.getIdUsuario());
-        vo.setUsername(user.getUserName());
+        vo.setUsername(user.getUsername());
         vo.setBiografia(user.getBiografia());
         vo.setEmail(user.getEmail());
-        vo.setSenha(user.getSenha());
-        vo.setComentario(user.getComentario());
-        vo.setPostagem(user.getPostagems());
+        vo.setSenha(user.getPassword());
+        vo.setComentario(user.getComentarios());
+        vo.setPostagem(user.getPostagens());
         return vo;
     }
 
     public UsuarioVO_OutPut convertToOutPut(Usuario usuario) {
         UsuarioVO_OutPut vo = new UsuarioVO_OutPut();
         vo.setIdUsuario(usuario.getIdUsuario());
-        vo.setNome(usuario.getUserName());
+        vo.setNome(usuario.getUsername());
         vo.setBiografia(usuario.getBiografia());
         vo.setEmail(usuario.getEmail());
-        vo.setComentario(usuario.getComentario());
+        vo.setComentario(usuario.getComentarios());
     
         return vo;
     }

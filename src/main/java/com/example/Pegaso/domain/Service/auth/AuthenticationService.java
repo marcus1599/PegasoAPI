@@ -26,7 +26,7 @@ public class AuthenticationService {
     public Optional<String> login(String email, String senha) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
         
-        if (usuarioOpt.isPresent() && passwordEncoder.matches(senha, usuarioOpt.get().getSenha())) {
+        if (usuarioOpt.isPresent() && passwordEncoder.matches(senha, usuarioOpt.get().getPassword())) {
             return Optional.of(jwtTokenProvider.generateToken(email));
         }
         
@@ -43,7 +43,7 @@ public class AuthenticationService {
 
         // Cria o objeto de usuário e salve no banco de dados
         Usuario usuario = new Usuario();
-        usuario.setUserName(usuarioVO.getUsername());
+        usuario.setUsername(usuarioVO.getUsername());
         usuario.setEmail(usuarioVO.getEmail());
         usuario.setSenha(senhaCriptografada); 
 

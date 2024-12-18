@@ -83,7 +83,7 @@ public class UsuarioServiceImp implements UsuarioService {
 
 		var entity = repositoryUser.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Searched user with specified id not found"));
-		entity.setUserName(usuarioVO.getUsername());
+		entity.setUsername(usuarioVO.getUsername());
 		entity.setBiografia(usuarioVO.getBiografia());
 		entity.setEmail(usuarioVO.getEmail());
 		var usuario = repositoryUser.save(entity);

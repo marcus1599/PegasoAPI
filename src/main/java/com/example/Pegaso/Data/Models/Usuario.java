@@ -1,18 +1,13 @@
 package com.example.Pegaso.Data.Models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +20,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "Usuario")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +29,7 @@ public class Usuario implements Serializable {
     @Column(name = "id_usuario")
     private Long idUsuario;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = true)
@@ -43,9 +38,10 @@ public class Usuario implements Serializable {
     @Column(length = 255)
     private String avatar;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Comentario> comentarios;
 
@@ -54,10 +50,10 @@ public class Usuario implements Serializable {
     private List<Postagem> postagens;
 
     @Column(nullable = false)
-    @JsonIgnore 
+    @JsonIgnore
     private String senha;
 
-
+    // Getters e Setters
     public Long getIdUsuario() {
         return idUsuario;
     }
@@ -66,18 +62,13 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public String getUserName() {
+    @Override
+    public String getUsername() {
         return username;
     }
 
-    public void addComentario(Comentario comentario) {
-
-        setComentario(comentarios);
-        this.comentarios.add(comentario);
-    }
-
-    public void setUserName(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getBiografia() {
@@ -87,6 +78,7 @@ public class Usuario implements Serializable {
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
+
     public String getAvatar() {
         return avatar;
     }
@@ -104,25 +96,32 @@ public class Usuario implements Serializable {
     }
 
     @JsonIgnore
-    public List<Comentario> getComentario() {
-        return this.comentarios;
+    public List<Comentario> getComentarios() {
+        return comentarios;
     }
 
-    public void setComentario(List<Comentario> comentario) {
-        this.comentarios = comentario;
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
-    
+    public void addComentario(Comentario comentario) {
+        if (comentarios != null) {
+            comentarios.add(comentario);
+        }
+    }
+
     @JsonIgnore
-    public List<Postagem> getPostagems() {
-        return this.postagens;
+    public List<Postagem> getPostagens() {
+        return postagens;
     }
 
-    public void setPostagem(List<Postagem> postagems) {
-        this.postagens = postagems;
+    public void setPostagens(List<Postagem> postagens) {
+        this.postagens = postagens;
     }
 
-    public String getSenha() {
+    @Override
+    @JsonIgnore
+    public String getPassword() {
         return senha;
     }
 
@@ -130,6 +129,34 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    
+    // Métodos da interface UserDetails
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(); // Retornar lista de autoridades, se aplicável
+    }
 
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true; // Lógica para expiração de conta
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true; // Lógica para bloqueio de conta
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true; // Lógica para expiração de credenciais
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true; // Lógica para ativação de conta
+    }
 }
