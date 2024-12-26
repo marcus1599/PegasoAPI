@@ -1,8 +1,11 @@
 package com.example.Pegaso.Controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.example.Pegaso.domain.Service.Postagem.PostagemService;
 import com.example.Pegaso.domain.VO.V1.PostagemVO;
@@ -50,6 +55,14 @@ public class PostagemController {
         public ResponseEntity<Object> savePostagem(@RequestBody @Valid PostagemVO postagem) throws Exception {
                 return ResponseEntity.status(HttpStatus.CREATED).body(service.savePostagem(postagem));
         }
+
+         @GetMapping
+public Page<PostagemVO> listarPostagens(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) throws Exception {
+    PageRequest pageable = PageRequest.of(page, size); // Corrigido aqui
+    return service.listarPostagens(pageable);
+}
+
 
         @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE})
         @Operation(summary = "Finds all Posts", description = "Finds all Posts", tags = { "Posts" }, responses = {

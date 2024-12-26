@@ -1,6 +1,9 @@
 package com.example.Pegaso.domain.Service.Postagem;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -70,6 +73,13 @@ public class PostagemServiceImp implements PostagemService {
                 });
 
         return postagemVO;
+    }
+
+    @Override
+    public Page listarPostagens(PageRequest pageable){
+
+        return PostagemRepository.findAllByOrderByDataCriacaoDesc(pageable);
+
     }
 
     @Override

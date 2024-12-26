@@ -3,11 +3,11 @@ package com.example.Pegaso.Data.Models;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "Usuario")
-public class Usuario implements Serializable, UserDetails {
+public class Usuario implements  UserDetails {
 
     private static final long serialVersionUID = 1L;
 

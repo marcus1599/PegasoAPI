@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Part;
-import javax.validation.Valid;
+import jakarta.servlet.http.Part;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/imagens/v1")

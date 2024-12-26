@@ -44,15 +44,15 @@ public class SecurityConfig {
             .cors().and()  // Habilita o CORS
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authorizeRequests()
-            .antMatchers("/auth/login", "/auth/register", "/Postagem/v1").permitAll()
-            .anyRequest().authenticated();
-
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/login", "/auth/register", "/Postagem/v1").permitAll()
+                .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    
         return http.build();
     }
-
+    
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
