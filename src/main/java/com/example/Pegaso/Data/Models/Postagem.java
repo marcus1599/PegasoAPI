@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -33,7 +34,8 @@ import lombok.ToString;
 public class Postagem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postagem_seq")
+    @SequenceGenerator(name = "postagem_seq", sequenceName = "postagem_seq", allocationSize = 1)
     @Column(name = "id_postagem")
     private Long idPostagem;
 
