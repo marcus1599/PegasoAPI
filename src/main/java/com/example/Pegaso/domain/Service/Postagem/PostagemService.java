@@ -2,7 +2,7 @@ package com.example.Pegaso.domain.Service.Postagem;
 
 import java.util.List;
 
-import org.springdoc.core.converters.models.Pageable;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
