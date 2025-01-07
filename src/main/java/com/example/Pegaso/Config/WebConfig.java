@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200") // Permite apenas seu frontend local
+                .allowedOrigins("http://localhost:4200,https://front-pegasus.vercel.app/") // Permite apenas seu frontend local e deployado
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true); // Necessário para permitir envio de cookies ou credenciais
