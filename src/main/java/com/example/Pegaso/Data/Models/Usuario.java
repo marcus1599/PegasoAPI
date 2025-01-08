@@ -25,8 +25,8 @@ public class Usuario implements  UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postagem_seq")
-    @SequenceGenerator(name = "postagem_seq", sequenceName = "postagem_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_seq")
+    @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq", allocationSize = 1)
     @Column(name = "id_usuario")
     private Long idUsuario;
 
