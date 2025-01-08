@@ -39,13 +39,14 @@ public class AuthenticationService {
         }
 
         // Criptografe a senha
-        String senhaCriptografada = passwordEncoder.encode(usuarioVO.getSenha());
+        String senhaCriptografada = passwordEncoder.encode(usuarioVO.getPassword());
 
         // Cria o objeto de usuário e salve no banco de dados
         Usuario usuario = new Usuario();
         usuario.setUsername(usuarioVO.getUsername());
         usuario.setEmail(usuarioVO.getEmail());
-        usuario.setSenha(senhaCriptografada); 
+        usuario.setSenha(senhaCriptografada);
+        usuario.setBiografia(usuarioVO.getBiografia());
 
         usuarioRepository.save(usuario);
     }

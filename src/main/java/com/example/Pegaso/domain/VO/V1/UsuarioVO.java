@@ -22,7 +22,7 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     private String username;
     private String biografia;
     private String email;
-    private String senha;
+    private String password;
     private List<Postagem> postagens;
     private List<Comentario> comentario;
 
@@ -40,11 +40,11 @@ public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Seriali
     public String getUsername() {
         return username;
     }
-    public String getSenha(){
-        return senha;
+    public String getPassword(){
+        return password;
     }
-    public void setSenha(String senha){
-        this.senha = senha;
+    public void setPassword(String senha){
+        this.password = senha;
     }
 
     public void setUsername(String username) {

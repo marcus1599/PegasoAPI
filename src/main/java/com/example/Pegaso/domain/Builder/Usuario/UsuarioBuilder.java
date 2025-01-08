@@ -18,7 +18,7 @@ public class UsuarioBuilder {
         vo.setUsername(user.getUsername());
         vo.setBiografia(user.getBiografia());
         vo.setEmail(user.getEmail());
-        vo.setSenha(user.getPassword());
+        vo.setPassword(user.getPassword());
         vo.setComentario(user.getComentarios());
         vo.setPostagem(user.getPostagens());
         return vo;
