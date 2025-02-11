@@ -17,5 +17,3 @@ CREATE TABLE IF NOT EXISTS public.postagem
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.postagem
-    OWNER to pegaso_postgresql_user;
