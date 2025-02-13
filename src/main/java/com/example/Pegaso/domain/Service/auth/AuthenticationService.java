@@ -32,6 +32,7 @@ public class AuthenticationService {
         
         return Optional.empty();
     }
+
     public void register(UsuarioVO usuarioVO) throws Exception {
         // Verifique se o e-mail já está registrado
         if (usuarioRepository.findByEmail(usuarioVO.getEmail()).isPresent()) {
@@ -49,5 +50,20 @@ public class AuthenticationService {
         usuario.setBiografia(usuarioVO.getBiografia());
 
         usuarioRepository.save(usuario);
+    }
+
+    public Optional<UsuarioVO> getUserInfo(String email) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            UsuarioVO usuarioVO = new UsuarioVO();
+            usuarioVO.setKey(usuario.getIdUsuario());
+            usuarioVO.setUsername(usuario.getUsername());
+            usuarioVO.setEmail(usuario.getEmail());
+            usuarioVO.setBiografia(usuario.getBiografia());
+            // Adicione outras propriedades conforme necessário
+            return Optional.of(usuarioVO);
+        }
+        return Optional.empty();
     }
 }

@@ -1,7 +1,9 @@
 package com.example.Pegaso.Controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Pegaso.domain.Service.auth.AuthenticationService;
@@ -43,5 +45,17 @@ public ResponseEntity<?> register(@RequestBody UsuarioVO usuarioVO) {
         return ResponseEntity.status(400).body("Erro no registro: " + e.getMessage());
     }
 }
+  @GetMapping("/userinfo")
+    public ResponseEntity<?> getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        
+        Optional<UsuarioVO> usuarioVO = authenticationService.getUserInfo(email);
+        if (usuarioVO.isPresent()) {
+            return ResponseEntity.ok(usuarioVO.get());
+        } else {
+            return ResponseEntity.status(404).body("Usuário não encontrado");
+        }
+    }
 
 }
