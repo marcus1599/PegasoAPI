@@ -147,4 +147,19 @@ public Page<PostagemVO> listarPostagens(@RequestParam(defaultValue = "0") int pa
                 return ResponseEntity.status(HttpStatus.OK).body(service.update(post, id));
         }
 
+        @GetMapping(value = "/usuario/{usuarioId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+        @Operation(summary = "Find Posts by User", description = "Finds all Posts by a specific User", tags = { "Posts" }, responses = {
+                                        @ApiResponse(description = "Success", responseCode = "200", content = {
+                                                                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostagemVO.class)))
+                                        }),
+                                        @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
+                                        @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                                        @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                                        @ApiResponse(description = "InternalError", responseCode = "500", content = @Content),
+        })
+        public ResponseEntity<List<PostagemVO>> findByUsuario(@PathVariable(value = "usuarioId") Long usuarioId) throws Exception {
+                        
+                        return ResponseEntity.status(HttpStatus.OK).body(service.findAllPostByUser(usuarioId));
+        }
+
 }

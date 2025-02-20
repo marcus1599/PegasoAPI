@@ -53,7 +53,7 @@ public class AuthenticationService {
     }
 
     public Optional<UsuarioVO> getUserInfo(String email) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByUserName(email);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
             UsuarioVO usuarioVO = new UsuarioVO();

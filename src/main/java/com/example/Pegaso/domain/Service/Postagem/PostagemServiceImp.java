@@ -11,6 +11,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.example.Pegaso.Controller.DicaController;
 import com.example.Pegaso.Controller.PostagemController;
 import com.example.Pegaso.Data.Models.Postagem;
+import com.example.Pegaso.Data.Models.Usuario;
 import com.example.Pegaso.Data.Repository.PostagemRepository;
 import com.example.Pegaso.domain.Builder.DozerMapper;
 import com.example.Pegaso.domain.Builder.Postagem.PostagemBuilder;
@@ -80,6 +81,35 @@ public class PostagemServiceImp implements PostagemService {
 
         return PostagemRepository.findAllByOrderByDataCriacaoDesc(pageable);
 
+    }
+
+    @Override
+    public List<PostagemVO> findAllPostByUser(Long id) {
+        var post = repository.findByUsuarioIdUsuario(id);   
+        var postagemVO = postagemBuilder.convertToVO(post);
+
+        postagemVO.stream()
+                .forEach(p -> {
+                    try {
+                        p.add(linkTo(methodOn(PostagemController.class)
+                                .getOnePost(p.getKey())).withRel("Detalhes"));
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                });
+        postagemVO.stream()
+                .forEach(p -> {
+                    try {
+                        p.add(linkTo(methodOn(DicaController.class)
+                                .getDicasByPostagem(p.getKey())).withRel("Dicas"));
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                });
+
+        return postagemVO;
     }
 
     @Override

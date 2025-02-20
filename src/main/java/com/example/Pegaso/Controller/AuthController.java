@@ -1,11 +1,13 @@
 package com.example.Pegaso.Controller;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.Pegaso.domain.Service.Usuario.UsuarioDetailsService;
 import com.example.Pegaso.domain.Service.auth.AuthenticationService;
 import com.example.Pegaso.domain.VO.V1.UsuarioVO;
 
@@ -18,7 +20,8 @@ import java.util.Optional;
 public class AuthController {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationService authenticationService; UsuarioDetailsService usuarioDetailsService;
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
@@ -48,13 +51,13 @@ public ResponseEntity<?> register(@RequestBody UsuarioVO usuarioVO) {
   @GetMapping("/userinfo")
     public ResponseEntity<?> getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        
+        String email = ((UserDetails) authentication.getPrincipal()).getUsername();
+        ///CORRIGIR BUSCA DE USUARIO
         Optional<UsuarioVO> usuarioVO = authenticationService.getUserInfo(email);
         if (usuarioVO.isPresent()) {
             return ResponseEntity.ok(usuarioVO.get());
         } else {
-            return ResponseEntity.status(404).body("Usuário não encontrado");
+            return ResponseEntity.status(404).body("Usuário não encontrado "+email);
         }
     }
 
