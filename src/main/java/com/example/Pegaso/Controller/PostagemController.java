@@ -19,9 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.Pegaso.Data.Models.Usuario;
+import com.example.Pegaso.domain.Builder.DozerMapper;
 import com.example.Pegaso.domain.Service.Postagem.PostagemService;
+import com.example.Pegaso.domain.Service.Usuario.UsuarioServiceImp;
+import com.example.Pegaso.domain.VO.V1.DicaVO;
+import com.example.Pegaso.domain.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.domain.VO.V1.PostagemVO;
+import com.example.Pegaso.domain.VO.V1.PostagemVO_OutPut;
+import com.example.Pegaso.exceptions.ResourceNotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -40,6 +46,9 @@ public class PostagemController {
         @Autowired
         private PostagemService service;
 
+        @Autowired
+        private UsuarioServiceImp usuarioServiceImp;
+
         @PostMapping(value = "/adicionar", produces = { MediaType.APPLICATION_JSON_VALUE,
                         MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE,
                                         MediaType.APPLICATION_XML_VALUE })
@@ -52,8 +61,9 @@ public class PostagemController {
                                         @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                                         @ApiResponse(description = "InternalError", responseCode = "500", content = @Content),
                         })
-        public ResponseEntity<Object> savePostagem(@RequestBody @Valid PostagemVO postagem) throws Exception {
-                return ResponseEntity.status(HttpStatus.CREATED).body(service.savePostagem(postagem));
+        public ResponseEntity<Object> savePostagem(@RequestBody @Valid PostagemVO postagem,  @RequestParam("userId") Long idUsuario) throws Exception {
+                var entityVO = usuarioServiceImp.findUserById(idUsuario);
+                return ResponseEntity.status(HttpStatus.CREATED).body(service.savePostagem(postagem, entityVO));
         }
 
          @GetMapping
@@ -160,6 +170,22 @@ public Page<PostagemVO> listarPostagens(@RequestParam(defaultValue = "0") int pa
         public ResponseEntity<List<PostagemVO>> findByUsuario(@PathVariable(value = "usuarioId") Long usuarioId) throws Exception {
                         
                         return ResponseEntity.status(HttpStatus.OK).body(service.findAllPostByUser(usuarioId));
+        }
+
+         @GetMapping(value = "FindBy/{idUsuario}", produces = { MediaType.APPLICATION_JSON_VALUE,
+                        MediaType.APPLICATION_XML_VALUE })
+        @Operation(summary = "Finds all Post", description = "Finds all Posts", tags = { "Post" }, responses = {
+                        @ApiResponse(description = "Success", responseCode = "200", content = {
+                                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DicaVO.class)))
+                        }),
+        })
+        public ResponseEntity<List<PostagemVO_OutPut>> getDicasByPostagem(
+                        @PathVariable(value = "idUsuario") Long idUsuario) throws Exception {
+
+                var entityVO = usuarioServiceImp.findUserById(idUsuario);
+                var entity = DozerMapper.parseObject(entityVO, Usuario.class);
+
+                return ResponseEntity.status(HttpStatus.OK).body(service.findByUsuarioContainin(entity));
         }
 
 }

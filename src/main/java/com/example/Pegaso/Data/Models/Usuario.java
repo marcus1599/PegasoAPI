@@ -3,7 +3,7 @@ package com.example.Pegaso.Data.Models;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "Usuario")
-public class Usuario implements  UserDetails {
+public class Usuario implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,11 +44,11 @@ public class Usuario implements  UserDetails {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
-    private List<Comentario> comentarios;
+    private List<Comentario> comentarios = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
-    private List<Postagem> postagens;
+    private List<Postagem> postagens = new ArrayList<>();
 
     @Column(nullable = false)
     @JsonIgnore
@@ -118,6 +118,12 @@ public class Usuario implements  UserDetails {
 
     public void setPostagens(List<Postagem> postagens) {
         this.postagens = postagens;
+    }
+
+    public void addPostagem(Postagem postagem) {
+        if (postagens != null) {
+            postagens.add(postagem);
+        }
     }
 
     @Override

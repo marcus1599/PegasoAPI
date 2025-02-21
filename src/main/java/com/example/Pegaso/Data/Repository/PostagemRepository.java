@@ -21,5 +21,6 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
     }
       
         public List<Postagem> findByUsuarioIdUsuario(Long id);
+        public List<Postagem> findByUsuarioEquals(Usuario usuario);
 
 }

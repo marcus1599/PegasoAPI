@@ -10,13 +10,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.example.Pegaso.Controller.DicaController;
 import com.example.Pegaso.Controller.PostagemController;
+import com.example.Pegaso.Data.Models.Dica;
 import com.example.Pegaso.Data.Models.Postagem;
 import com.example.Pegaso.Data.Models.Usuario;
 import com.example.Pegaso.Data.Repository.PostagemRepository;
 import com.example.Pegaso.domain.Builder.DozerMapper;
 import com.example.Pegaso.domain.Builder.Postagem.PostagemBuilder;
+import com.example.Pegaso.domain.VO.V1.DicaVO;
+import com.example.Pegaso.domain.VO.V1.DicaVO_OutPut;
 import com.example.Pegaso.domain.VO.V1.PostagemVO;
 import com.example.Pegaso.domain.VO.V1.PostagemVO_OutPut;
+import com.example.Pegaso.domain.VO.V1.UsuarioVO;
 import com.example.Pegaso.exceptions.ResourceNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -33,10 +37,14 @@ public class PostagemServiceImp implements PostagemService {
     private final PostagemBuilder postagemBuilder;
 
     @Override
-    public PostagemVO savePostagem(PostagemVO postagemVO) throws Exception {
+    public PostagemVO savePostagem(PostagemVO postagemVO,UsuarioVO usuarioVO ) throws Exception {
 
         // Conversão de VO para entidade
         var entity = DozerMapper.parseObject(postagemVO, Postagem.class);
+        var entityUser = DozerMapper.parseObject(usuarioVO, Usuario.class);
+
+        entityUser.addPostagem(entity);
+        entity.setUsuario(entityUser);
 
         // Salvando no banco de dados e adicionando em uma variável
         var postagem = repository.save(entity);
@@ -46,6 +54,8 @@ public class PostagemServiceImp implements PostagemService {
         vo.add(linkTo(methodOn(PostagemController.class).getOnePost(vo.getKey())).withSelfRel());
         return vo;
     }
+    
+
 
     @Override
     public List<PostagemVO> findAllPost() {
@@ -110,6 +120,16 @@ public class PostagemServiceImp implements PostagemService {
                 });
 
         return postagemVO;
+    }
+
+        @Override
+    public List<PostagemVO_OutPut> findByUsuarioContainin(Usuario usuario) throws Exception {
+        var post = repository.findByUsuarioEquals(usuario);
+        var postVO = postagemBuilder.convertToOutPut(post);
+
+      
+
+        return postVO;
     }
 
     @Override
